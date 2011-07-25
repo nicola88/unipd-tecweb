@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+targetNamespace="http://progetto-tecweb/utenti"
+xmlns="http://progetto-tecweb/utenti"
+elementFormDefault="qualified">
+</xsd:schema>
+
+<!-- 
+	<xs:element name="utenti">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="utente" type="tipo.utente" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="tipo.utente">
+		<xs:sequence>
+			<xs:element name="nome" type="xs:string" />
+			<xs:element name="cognome" type="xs:string" />
+			<xs:element name="mail" type="xs:string" />
+			<xs:element name="utente" type="xs:string"/>
+			<xs:element name="password" type="xs:string"/>
+			<xs:element name="prenotazioni" type="tipo.prenotazioni"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tipo.prenotazioni">
+		<xs:sequence>
+			<xs:element name="prenotazione" type="tipo.prenotazione" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="tipo.prenotazione">
+		<xs:sequence>
+			<xs:element name="spettacolo" type="xs:string" />
+			<xs:element name="biglietti" type="xs:positiveInteger" />
+		</xs:sequence>
+	</xs:complexType>
+ -->

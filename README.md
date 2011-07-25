@@ -8,20 +8,27 @@ Organizzazione del contenuto
     - img/: immagini e favicon utilizzate (locandine, ...) 
     - script/: script e pagine dinamiche in JavaScript o Perl
     - style/: fogli di stile
+    - template/: modelli per pagine statiche (html) e dianmiche (perl)
     - xml/: documenti (utenti.xml, cinema.xml) e relativi schemi
 
-Sito web
---------
-- Pagina iniziale (*default.html*)
-    - Area utente (*area_utente.html*)
-        - Aggiorna password (*aggiorna_password[_nos].html*)
-    - Film (*film.html*)
-    - Informazioni (*informazioni.html*)
-    - Programmazione (*programmazione.html*)
-- Autenticazione (*login[_nos].html*)
-- Registrazione (*registrazione[_nos].html*)
+Struttura
+---------
+Viene riportata di seguito la struttura gerarchica del sito web: per ciascuna pagina è riportato un titolo breve e - tra parentesi - il nome del file corrispondente; i nomi di file privi di estensione sono da intendersi pagine dinamiche generate mediante script Perl.
+ 
+- Pagina iniziale (default.html)
+    - Film (film.html)
+        - Scheda film (scheda)
+            - Prenotazione biglietti (prenotazione + prenotazione_conferma)
+    - Programmazione (programmazione.html)
+    - Informazioni (informazioni.html)
+    - Notizie (notizie)    
+    - Area utente (account)
+        - Cambia password (aggiorna_pwd.html | aggiorna_pwd_nos.html) + (aggiorna_pwd_conferma)
+- Login (login.html | login_nos.html)
+    - Controllo sessione (controlla_sessione)
+- Registrazione (registrazione.html | registrazione_nos.html) + (registrazione_conferma)
 
-Le pagine del tipo <nome>[_nos].html sono disponibili in due versioni, a seconda che il browser supporto JS (*<nome>.html*) o meno (*<nome>_nos.html*);
+Le pagine disponibili in duplice versione (con o prive del suffisso _nos) sono accessibili sia in browser con supporto JavaScript abilitato sia disabilitato o non supportato.
 
 Documentazione (doc)
 --------------------
@@ -40,6 +47,11 @@ Presentazione (style)
 - **screen.css**
 - **portable.css**
 - **print.css**
+
+Modelli (template)
+------------------
+- **xhtml.html**
+- **perl**
 
 Base di dati (xml)
 ------------------
