@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Pagina - Cinema Paradiso</title>
+    <title>Autenticazione - Cinema Paradiso</title>
     <link href="/style/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="/style/portable.css" rel="stylesheet" type="text/css" media="handheld, screen and (max-width:480px), only screen and (max-device-width:480px)" />
     <link href="/style/print.css" rel="stylesheet" type="text/css" media="print" />
@@ -32,14 +32,25 @@
         </ul>
     </div>
     <div id="path">
-    	<p>Sei in: <a href="/default.html" title="">Pagina iniziale</a> &#187; pagina_corrente</p>
+    	<p>Sei in: <a href="/default.html" title="">Pagina iniziale</a> &#187; Autenticazione</p>
     </div>
     <div id="content">
-    	<h1>Titolo pagina</h1>
-    	<ul id="indice">
-    		<li><a href="#sezione">Sezione</a></li>
-    	</ul>
-    	<h2 id="sezione">Sezione</h2>
+    	<h1>Autenticazione</h1>
+		<form action="" method="post" id="login">
+			<fieldset>
+				<legend>Inserisci le tue credenziali</legend>
+				<label for="username">Nome utente</label>
+				<input id="username" name="username" />
+				<label for="password">Password</label>
+				<input id="password" name="password" />
+				<input type="hidden" id="js_enabled" name="js_enabled" value="true" />
+				<input type="submit" value="Accedi" onclick="validateLogin()" />
+			</fieldset>
+		</form>
+		<p>
+			<a href="/registrazione.html" title="Registrazione">Non hai un account? Registrati, &egrave; gratis!</a>
+   			<!-- | <a href="#" title="Invio nuova password">Ho dimenticato la password</a>  -->
+		</p>
     </div>
     <div id="footer">
     	<a href="http://validator.w3.org/check?uri=referer"><span id="xhtml_valid" title="HTML 1.0 Strict valido"></span></a>
