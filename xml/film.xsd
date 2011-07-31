@@ -1,6 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 targetNamespace="http://progetto-tecweb/film"
 xmlns="http://progetto-tecweb/film"
 elementFormDefault="qualified">
-</xsd:schema>
+
+<xs:element name="programmazione">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element name="film" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="titolo" type="xs:string" />
+						<xs:element name="regista" type="xs:string" />
+						<xs:element name="nazione" type="xs:string" />
+						<xs:element name="anno" type="xs:gYear" />
+						<xs:element name="durata" type="xs:positiveInteger" />
+						<xs:element name="genere" type="xs:string" />
+						<xs:element name="attori">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="attore" type="xs:string" maxOccurs="unbounded" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="uscita" type="xs:date" minOccurs="0" />
+						<xs:element name="tagline" type="xs:string" minOccurs="0" />
+						<xs:element name="trama" type="xs:string" minOccurs="0" />
+						<xs:element name="spettacoli">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="spettacolo" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="data" type="xs:date" />
+												<xs:element name="ora" type="xs:time" />
+												<xs:element name="posti" type="xs:positiveInteger" />
+											</xs:sequence>
+											<xs:attribute name="id" type="xs:ID" />
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="id" type="xs:ID"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:element>
+
+</xs:schema>
