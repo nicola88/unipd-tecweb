@@ -15,8 +15,32 @@ elementFormDefault="qualified">
 						<xs:element name="nazione" type="xs:string" />
 						<xs:element name="anno" type="xs:gYear" />
 						<xs:element name="durata" type="xs:positiveInteger" />
-						<xs:element name="genere" type="xs:string" />
-						<xs:element name="attori">
+						<xs:element name="generi">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="genere" maxOccurs="unbounded">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="Animazione" />
+												<xs:enumeration value="Avventura" />
+												<xs:enumeration value="Comico" />
+												<xs:enumeration value="Commedia" />
+												<xs:enumeration value="Documentario" />
+												<xs:enumeration value="Drammatico" />
+												<xs:enumeration value="Fantascienza" />
+												<xs:enumeration value="Guerra" />
+												<xs:enumeration value="Horror" />
+												<xs:enumeration value="Poliziesco" />
+												<xs:enumeration value="Spionaggio" />
+												<xs:enumeration value="Storico" />
+												<xs:enumeration value="Thriller" />
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="cast">
 							<xs:complexType>
 								<xs:sequence>
 									<xs:element name="attore" type="xs:string" maxOccurs="unbounded" />
@@ -26,7 +50,7 @@ elementFormDefault="qualified">
 						<xs:element name="uscita" type="xs:date" minOccurs="0" />
 						<xs:element name="tagline" type="xs:string" minOccurs="0" />
 						<xs:element name="trama" type="xs:string" minOccurs="0" />
-						<xs:element name="spettacoli">
+						<xs:element name="programmazione">
 							<xs:complexType>
 								<xs:sequence>
 									<xs:element name="spettacolo" minOccurs="0" maxOccurs="unbounded">
@@ -51,3 +75,7 @@ elementFormDefault="qualified">
 </xs:element>
 
 </xs:schema>
+
+<!--
+- Nome convenzionale locandine
+-->

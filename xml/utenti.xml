@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<utenti xmlns:p="http://progetto-tecweb/utenti"
+<utenti xmlns="http://progetto-tecweb/utenti"
 xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"
 xs:schemaLocation="http://progetto-tecweb/utenti utenti.xsd">
+	<utente>
+		<nome>Nicola</nome>
+		<cognome>Moretto</cognome>
+		<email>nicola.moretto@live.it</email>
+		<username>nmoretto</username>
+		<password>56ae24b70dcee900108f5696030f6b45</password>
+		<prenotazioni />
+	</utente>
 </utenti>
