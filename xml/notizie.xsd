@@ -15,9 +15,9 @@ elementFormDefault="qualified">
 						<xs:element name="categoria">
 							<xs:simpleType>
 								<xs:restriction base="xs:string">
-									<xs:enumeration value="programmazione" />
-									<xs:enumeration value="eventi" />
-									<xs:enumeration value="avvisi" />
+									<xs:enumeration value="Programmazione" />
+									<xs:enumeration value="Eventi" />
+									<xs:enumeration value="Avvisi" />
 								</xs:restriction>
 							</xs:simpleType>
 						</xs:element>

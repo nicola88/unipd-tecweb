@@ -11,15 +11,29 @@ elementFormDefault="qualified">
 						<xs:sequence>
 							<xs:element name="nome" type="xs:string"/>
 						    <xs:element name="cognome" type="xs:string"/>
-						    <xs:element name="mail" type="xs:string">
+						    <xs:element name="email">
 						    	<xs:simpleType>
 						    		<xs:restriction base="xs:string">
-						    			<xs:pattern value="[a-zA-Z0-9]+@[a-zA-Z0-9]+.[a-zA-Z0-9]+" />
+						    			<xs:pattern value="\S+@\S+\.[a-zA-Z0-9]+" />
 						    		</xs:restriction>
 						    	</xs:simpleType>
 						    </xs:element>
 						    <xs:element name="username" type="xs:string"/>
 						    <xs:element name="password" type="xs:string"/>
+						    <xs:element name="prenotazioni">
+						    	<xs:complexType>
+						    		<xs:sequence>
+						    			<xs:element name="prenotazione" minOccurs="0" maxOccurs="unbounded">
+						    				<xs:complexType>
+						    					<xs:sequence>
+						    						<xs:element name="spettacolo" type="xs:string" />
+						    						<xs:element name="posti" type="xs:positiveInteger" />
+						    					</xs:sequence>
+						    				</xs:complexType>
+						    			</xs:element>
+						    		</xs:sequence>
+						    	</xs:complexType>						    	
+						    </xs:element>
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
