@@ -33,7 +33,7 @@ print <<HTML;
             </li>
             <li><a href="/informazioni.html" accesskey="3">Informazioni</a>
             </li>
-            <li><a href="notizie" accesskey="4">Notizie</a>
+            <li><a href="/cgi-bin/notizie.cgi" accesskey="4">Notizie</a>
             </li>
         </ul>
     </div>

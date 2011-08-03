@@ -1,17 +1,49 @@
 #!/usr/bin/perl
 
 # nome -- descrizione
-# QUERY_STRING: formato della QUERY_STRING (lista argomenti e valori)
+# QUERY_STRING: spettacolo=<id-spettacolo>
 use XML::LibXML; # se usate XML
 
 print "Content-type: text/html\n\n";
+
+# QUERY_STRING: film=<id_film>&spettacolo=<id_spettacolo>
+if (length ($ENV{'QUERY_STRING'}) > 0)
+{
+	$buffer = $ENV{'QUERY_STRING'};
+    @pairs = split(/&/, $buffer);
+    foreach $pair (@pairs)
+    {
+    	($name, $value) = split(/=/, $pair);
+        $value =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;
+        $input{$name} = $value;
+    }
+}
+
+# Memorizza gli argomenti passati nella query string in variabili locali
+my $spettacolo=$input{'spettacolo'}; # ID spettacolo (XML)
+
+# Validazione input query string
+my $validationError=0;
+# ERRORE 1: valore vuoto per l'elemento spettacolo
+if(!$spettacolo) {
+	$validationError=1;
+}
+# Leggo in XML le informazioni relative allo spettacolo (i dati letti da xml sono supposti validi e non richiedono controlli):
+my $film = "Titolo film";
+my $data = "03/07/2011";
+my $ora = "09:30";
+my $posti = 10;
+my $maxPrenotazioni = 15; # Numero massimo di prenotazioni individuali
+if($posti<$maxPrenotazioni) {
+	$maxPrenotazioni = $posti;
+}
 
 print <<HTML;
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Pagina - Cinema Paradiso</title>
+    <title>Prenotazione biglietti - Cinema Paradiso</title>
     <link href="/style/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="/style/portable.css" rel="stylesheet" type="text/css" media="handheld, screen and (max-width:480px), only screen and (max-device-width:480px)" />
     <link href="/style/print.css" rel="stylesheet" type="text/css" media="print" />
@@ -41,14 +73,39 @@ print <<HTML;
         </ul>
     </div>
     <div id="path">
-    	<p>Sei in: <a href="/default.html" title="">Pagina iniziale</a> &#187; pagina_corrente</p>
+    	<p>Sei in: <a href="/default.html" title="">Pagina iniziale</a> &#187; Prenotazione biglietti</p>
     </div>
     <div id="content">
-    	<h1>Titolo pagina</h1>
+    	<h1>Prenotazione biglietti</h1>
+    	<p>Codice errore: $validationError.</p>
     	<ul id="indice">
-    		<li><a href="#sezione">Sezione</a></li>
+    		<li><a href="#spettacolo">Informazioni spettacolo</a></li>
+    		<li><a href="#prenotazione">Informazioni prenotazione</a></li>
     	</ul>
-    	<h2 id="sezione">Sezione</h2>
+    	<h2 id="spettacolo">Informazioni spettacolo</h2>
+    	<dl>
+    		<dt>Film</dt>
+    		<dd>$film</dd>
+    		<dt>Giorno</dt>
+    		<dd>$data</dd>
+    		<dt>Ora</dt>
+    		<dd>$ora</dd>
+    	</dl>
+    	<h2 id="prenotazione">Informazioni prenotazione</h2>
+    	<form action="" method="post">
+    		<fieldset>
+    			<legend>Seleziona il numero di biglietti</legend>
+    			<label for="posti">Posti da prenotare</label>
+    			<select id="posti" name="posti">
+HTML
+for($count=1; $count <= $maxPrenotazioni; $count++) {
+	print "\t\t\t\t<option>$count</option>\n";
+}
+print <<HTML
+    			</select>
+    			<input type="hidden" name="spettacolo" id="spettacolo" value="$spettacolo" />
+    			<input type="submit" value="Conferma la prenotazione" />
+    		</fieldset>
     </div>
     <div id="footer">
     	<a href="http://validator.w3.org/check?uri=referer"><span id="xhtml_valid" title="HTML 1.0 Strict valido"></span></a>
