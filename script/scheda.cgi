@@ -35,7 +35,7 @@ print <<HTML;
     	<h2>Programmazione e prenotazioni online</h2>
     </div>
     <div id="account">
-    	<p><a href="/cgi-bin/account" accesskey="8" title="Area riservata">Area riservata</a> | <a href="/registrazione.html" accesskey="9" title="Registrazione">Registrati</a></p>
+    	<p><a href="/cgi-bin/account.cgi" accesskey="8" title="Area riservata">Area riservata</a> | <a href="/registrazione.html" accesskey="9" title="Registrazione">Registrati</a></p>
     </div>
     <div id="navigation">
     	<ul>
@@ -47,7 +47,7 @@ print <<HTML;
             </li>
             <li><a href="/informazioni.html" accesskey="3">Informazioni</a>
             </li>
-            <li><a href="/cgi-bin/notizie" accesskey="4">Notizie</a>
+            <li><a href="/cgi-bin/notizie.cgi" accesskey="4">Notizie</a>
             </li>
         </ul>
     </div>
