@@ -2,25 +2,14 @@
 
 # nome -- descrizione
 # QUERY_STRING: spettacolo=<id-spettacolo>
+use CGI qw(:standard);
 use XML::LibXML; # se usate XML
 
 print "Content-type: text/html\n\n";
 
-# QUERY_STRING: film=<id_film>&spettacolo=<id_spettacolo>
-if (length ($ENV{'QUERY_STRING'}) > 0)
-{
-	$buffer = $ENV{'QUERY_STRING'};
-    @pairs = split(/&/, $buffer);
-    foreach $pair (@pairs)
-    {
-    	($name, $value) = split(/=/, $pair);
-        $value =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;
-        $input{$name} = $value;
-    }
-}
-
 # Memorizza gli argomenti passati nella query string in variabili locali
-my $spettacolo=$input{'spettacolo'}; # ID spettacolo (XML)
+my $cgi = new CGI;
+my $spettacolo = $cgi->param('spettacolo'); # $input{'spettacolo'}; # ID spettacolo (XML)
 
 # Validazione input query string
 my $validationError=0;
