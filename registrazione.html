@@ -36,7 +36,7 @@
     </div>
     <div id="content">
     	<h1>Registrazione</h1>
-		<form action="" method="post" id="registrazione">
+		<form action="" method="get" id="registrazione">
 			<fieldset>
 				<legend>Informazioni personali</legend>
 				<label for="nome">Nome</label>
@@ -54,11 +54,13 @@
 				<input type="password" id="password" name="password"/>
 				<label for="password_confirm">Conferma password</label>
 				<input type="password" id="password_confirm" name="password_confirm"/>
-				<input type="hidden" id="js_enabled" name="js_enabled" value="true" />
-			</fieldset>
-			<fieldset>
 				<input type="submit" value="Procedi" />
 			</fieldset>
+			<noscript>
+			<fieldset class="script">
+				<input type="text" id="js_enabled" name="js_enabled" value="false" />
+			</fieldset>
+			</noscript>
 		</form>
     </div>
     <div id="footer">

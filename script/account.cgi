@@ -2,7 +2,7 @@
 
 # account -- Visualizza la pagina riservata con dati personali e prenotazioni effettuate
 # QUERY_STRING: formato della QUERY_STRING (lista argomenti e valori)
-use XML::LibXML; # se usate XML
+use XML::LibXML;
 
 print "Content-type: text/html\n\n";
 

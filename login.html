@@ -6,6 +6,7 @@
     <link href="/style/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="/style/portable.css" rel="stylesheet" type="text/css" media="handheld, screen and (max-width:480px), only screen and (max-device-width:480px)" />
     <link href="/style/print.css" rel="stylesheet" type="text/css" media="print" />
+    <script type="text/javascript" src="/style/validation.js"></script>
     <link rel="shortcut icon" href="/img/cinema.ico" />
 </head>
 <body>
@@ -36,20 +37,23 @@
     </div>
     <div id="content">
     	<h1>Autenticazione</h1>
-		<form action="" method="post" id="login">
+		<form action="/cgi-bin/login.cgi" method="get" id="login">
 			<fieldset>
 				<legend>Inserisci le tue credenziali</legend>
 				<label for="username">Nome utente</label>
 				<input id="username" name="username" />
 				<label for="password">Password</label>
-				<input id="password" name="password" />
-				<input type="hidden" id="js_enabled" name="js_enabled" value="true" />
+				<input type="password" id="password" name="password" />
 				<input type="submit" value="Accedi" />
 			</fieldset>
+			<noscript>
+			<fieldset class="script">
+				<input type="text" id="js_enabled" name="js_enabled" value="false" />
+			</fieldset>
+			</noscript>
 		</form>
 		<p>
 			<a href="/registrazione.html" title="Registrazione">Non hai un account? Registrati, &egrave; gratis!</a>
-   			<!-- | <a href="#" title="Invio nuova password">Ho dimenticato la password</a>  -->
 		</p>
     </div>
     <div id="footer">
