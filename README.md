@@ -13,22 +13,20 @@ Organizzazione del contenuto
 
 Struttura
 ---------
-Viene riportata di seguito la struttura gerarchica del sito web: per ciascuna pagina è riportato un titolo breve e - tra parentesi - il nome del file corrispondente; i nomi di file privi di estensione sono da intendersi pagine dinamiche generate mediante script Perl.
+Viene riportata di seguito la struttura gerarchica del sito web: per ciascuna pagina è riportato un titolo breve e - tra parentesi - il nome del file corrispondente.
  
 - Pagina iniziale (default.html)
     - Film (film.html)
-        - Scheda film (scheda)
-            - Prenotazione biglietti (prenotazione + prenotazione_conferma)
+        - Scheda film (scheda.cgi)
+            - Spettacolo (spettacolo.cgi)
+	            - Prenotazione biglietti (prenotazione.cgi + prenotazione_conferma.cgi)
     - Programmazione (programmazione.html)
     - Informazioni (informazioni.html)
-    - Notizie (notizie)    
-    - Area utente (account)
-        - Cambia password (aggiorna_pwd.html | aggiorna_pwd_nos.html) + (aggiorna_pwd_conferma)
-- Login (login.html | login_nos.html)
-    - Controllo sessione (controlla_sessione)
+    - Notizie (notizie.cgi)    
+    - Area utente (account.cgi)
+        - Cambia password (aggiorna_pwd.html + aggiorna_pwd_conferma.cgi)
+- Login (login.cgi)
 - Registrazione (registrazione.html | registrazione_nos.html) + (registrazione_conferma)
-
-Le pagine disponibili in duplice versione (con o prive del suffisso _nos) sono accessibili sia in browser con supporto JavaScript abilitato sia disabilitato o non supportato.
 
 Documentazione (doc)
 --------------------

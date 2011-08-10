@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<programmazione xmlns="http://progetto-tecweb/film"
-xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"
-xs:schemaLocation="http://progetto-tecweb/film film.xsd">
+<programmazione>
 	<film id="godf">
 		<titolo>Il Padrino</titolo>
 		<regista>Francis Ford Coppola</regista>
@@ -25,6 +23,10 @@ xs:schemaLocation="http://progetto-tecweb/film film.xsd">
 			Ciò scatena una lotta senza esclusione di colpi tra famiglie rivali, nella quale ha modo di distinguersi il giovane figlio, che riceve dal padre l'investitura a succedergli.
 		</trama>
 		<programmazione>
+			<!--
+				5-6 giugno: 09.30 - 12.00 - 16.30
+				7 giugno: 11.00 - 15.00 - 20.30
+			 -->
 			<spettacolo id="godf_S1">
 				<data>2011-06-05</data>
 				<ora>09:30:00</ora>
@@ -55,6 +57,21 @@ xs:schemaLocation="http://progetto-tecweb/film film.xsd">
 				<ora>16:30:00</ora>
 				<posti>150</posti>
 			</spettacolo>
+			<spettacolo id="godf_S7">
+				<data>2011-06-07</data>
+				<ora>11:00:00</ora>
+				<posti>75</posti>
+			</spettacolo>
+			<spettacolo>
+				<data>2011-06-07</data>
+				<ora>15:00:00</ora>
+				<posti>150</posti>
+			</spettacolo>
+			<spettacolo>
+				<data>2011-06-07</data>
+				<ora>20:30:00</ora>
+				<posti>150</posti>
+			</spettacolo>
 		</programmazione>
 	</film>
 	<film id="casro">
@@ -78,6 +95,10 @@ xs:schemaLocation="http://progetto-tecweb/film film.xsd">
 			James Bond è ancora privo della licenza di uccidere, ma non per questo meno pericoloso.	Due omicidi da professionista in rapida successione gli valgono la promozione al rango di "00". Nella sua prima missione, il neoagente 007 viene inviato da M, capo dei servizi segreti britannici, in Madagascar, alle Bahamas e infine in Montenegro. Qui Bond deve vedersela con Le Chiffre, uno spregiudicato banchiere minacciato dalle organizzazioni terroristiche che finanzia. Nel tentativo di raccogliere i fondi di cui ha bisogno, Le Chiffre organizza una partita di poker con una posta molto alta al Casino Royale. M incarica l'avvenente agente del Tesoro Vesper Lynd di tenere d'occhio Bond. Sulle prime scettico circa il contributo di Vesper alla missione, Bond vede crescere il proprio interesse nei confronti della sua partner man mano che insieme affrontano i pericoli. Messo a dura prova insieme alla compagna dall'astuzia e dalla crudeltà di Le Chiffre, Bond impara la lezione più importante: mai fidarsi di nessuno.
 		</trama>
 		<programmazione>
+			<!--
+				5-6 giugno: 11:00 - 14:00 - 17:00
+				7 giugno: 10:30 - 14:30 - 18:00 - 21:00 
+			 -->
 			<spettacolo id="casro_S1">
 				<data>2011-06-05</data>
 				<ora>11:00:00</ora>
@@ -86,7 +107,7 @@ xs:schemaLocation="http://progetto-tecweb/film film.xsd">
 			<spettacolo id="casro_S2">
 				<data>2011-06-05</data>
 				<ora>14:00:00</ora>
-				<posti>120</posti>
+				<posti>100</posti>
 			</spettacolo>
 			<spettacolo id="casro_S3">
 				<data>2011-06-05</data>
@@ -101,11 +122,31 @@ xs:schemaLocation="http://progetto-tecweb/film film.xsd">
 			<spettacolo id="casro_S5">
 				<data>2011-06-06</data>
 				<ora>15:00:00</ora>
-				<posti>120</posti>
+				<posti>100</posti>
 			</spettacolo>
 			<spettacolo id="casro_S6">
 				<data>2011-06-06</data>
 				<ora>20:30:00</ora>
+				<posti>150</posti>
+			</spettacolo>
+			<spettacolo id="casro_S7">
+				<data>2011-06-07</data>
+				<ora>10:30:00</ora>
+				<posti>75</posti>
+			</spettacolo>
+			<spettacolo id="casro_S8">
+				<data>2011-06-07</data>
+				<ora>14:30:00</ora>
+				<posti>150</posti>
+			</spettacolo>
+			<spettacolo id="casro_S9">
+				<data>2011-06-07</data>
+				<ora>18:00:00</ora>
+				<posti>100</posti>
+			</spettacolo>
+			<spettacolo id="casro_S10">
+				<data>2011-07-07</data>
+				<ora>21:00:00</ora>
 				<posti>150</posti>
 			</spettacolo>
 		</programmazione>
@@ -134,3 +175,9 @@ xs:schemaLocation="http://progetto-tecweb/film film.xsd">
 		<programmazione />
 	</film>
 </programmazione>
+
+<!-- 
+xmlns="http://progetto-tecweb/film"
+xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"
+xs:schemaLocation="http://progetto-tecweb/film film.xsd"
+-->

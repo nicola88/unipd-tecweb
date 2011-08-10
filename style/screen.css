@@ -1,1 +1,16 @@
 /* DEFAULT */
+
+div, dl, dd {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+dt {
+	/*float: left;*/
+	font-weight: bold;
+}
+
+.script {
+	display: none;
+}
