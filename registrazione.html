@@ -6,6 +6,7 @@
     <link href="/style/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="/style/portable.css" rel="stylesheet" type="text/css" media="handheld, screen and (max-width:480px), only screen and (max-device-width:480px)" />
     <link href="/style/print.css" rel="stylesheet" type="text/css" media="print" />
+    <script type="text/javascript" src="/script/validation.js"></script>
     <link rel="shortcut icon" href="/img/cinema.ico" />
 </head>
 <body>
@@ -36,15 +37,15 @@
     </div>
     <div id="content">
     	<h1>Registrazione</h1>
-		<form action="" method="get" id="registrazione">
+		<form action="/cgi-bin/registrazione.cgi" method="get" id="registrazione">
 			<fieldset>
 				<legend>Informazioni personali</legend>
 				<label for="nome">Nome</label>
 				<input name="nome" id="nome" />
 				<label for="cognome">Cognome</label>
 				<input id="cognome" name="cognome" />
-				<label for="mail">Posta elettronica</label>
-				<input id="mail" name="mail" />
+				<label for="email">Posta elettronica</label>
+				<input id="email" name="email" />
 			</fieldset>
 			<fieldset>
 				<legend>Informazioni del profilo</legend>
@@ -58,7 +59,7 @@
 			</fieldset>
 			<noscript>
 			<fieldset class="script">
-				<input type="text" id="js_enabled" name="js_enabled" value="false" />
+				<input type="text" id="javascript" name="javascript" value="false" />
 			</fieldset>
 			</noscript>
 		</form>

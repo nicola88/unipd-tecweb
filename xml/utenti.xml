@@ -5,8 +5,13 @@
 		<cognome>Moretto</cognome>
 		<email>nicola.moretto@live.it</email>
 		<username>nmoretto</username>
-		<password>01b49960fa5a89cfa2e8b02c33ca0085</password>
-		<prenotazioni />
+		<password>d0ef51379636616a1e351fa3bec115e6</password> <!-- pistola -->
+		<prenotazioni>
+			<prenotazione>
+				<spettacolo>godf_S2</spettacolo>
+				<posti>5</posti>
+			</prenotazione>
+		</prenotazioni>
 	</utente>
 </utenti>
 

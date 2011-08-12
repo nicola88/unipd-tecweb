@@ -14,3 +14,7 @@ dt {
 .script {
 	display: none;
 }
+
+form strong {
+	font-weight: bold;
+}
