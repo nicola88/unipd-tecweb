@@ -1,11 +1,37 @@
 #!/usr/bin/perl
 
-# account -- Visualizza la pagina riservata con dati personali e prenotazioni effettuate
-# QUERY_STRING: formato della QUERY_STRING (lista argomenti e valori)
+######################################################
+# NOME: account.cgi
+######################################################
+# DESCRIZIONE: visualizza e informazioni sul profilo
+# e le prenotazioni associate all'utente corrente
+######################################################
+# QUERY STRING: vuota
+######################################################
+use CGI;
+use CGI::Session;
 use XML::LibXML;
-
 print "Content-type: text/html\n\n";
 
+# 1. GESTIONE SESSIONE
+#my $session = CGI::Session->load() or die "Nessuna sessione aperta.";
+#if($session->is_empty() || $session->is_expired()){
+#	# non esiste una sessione attiva
+#	print "Location: /cgi-bin/404.cgi\n\n";
+#}
+my $username='nmoretto'; # $session->param('username');
+my $password='d0ef51379636616a1e351fa3bec115e6'; # $session->param('password'); # hash MD5!
+
+# 2. LETTURA INFORMAZIONI UTENTE da XML
+my $parser=XML::LibXML->new();
+my $document=$parser->parse_file('xml/utenti.xml');
+my $root=$document->getDocumentElement;
+my @users=$root->findnodes("//utente[username='$username' and password='$password']");
+my $nome=$users[0]->getElementsByTagName('nome');
+my $cognome=$users[0]->getElementsByTagName('cognome');
+my $email=$users[0]->getElementsByTagName('email');
+
+# 3. GENERAZIONE PAGINA WEB
 print <<HTML;
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it"> 
@@ -46,28 +72,37 @@ print <<HTML;
 	    	<li><a href="#prenotazioni">Prenotazioni</a></li>
 	    </ul>
 	    <h3 id="profilo">Dettagli del profilo</h3>
-	    <p>
-	    	<dl>
-	    		<dt>Nome:</dt>
-	    		<dd>nome</dd>
-	    		<dt>Cognome:</dt>
-	    		<dd>cognome</dd>
-	    		<dt>Nome utente</dt>
-	    		<dd>username</dd>
-	    		<dt>Indirizzo di posta elettronica:</dt>
-	    		<dd>mail</dd>    			
-	    	</dl>
+    	<dl>
+    		<dt>Nome</dt>
+    		<dd>$nome</dd>
+    		<dt>Cognome</dt>
+    		<dd>$cognome</dd>
+    		<dt>Nome utente</dt>
+    		<dd>$username</dd>
+    		<dt>Indirizzo di posta elettronica:</dt>
+    		<dd>$email</dd>    			
+    	</dl>
+    	<p>
 	    	<a href="/aggiorna_pwd.html" title="Cambia la password">Cambia password</a>
 	    </p>
 	    <h3 id="prenotazioni">Prenotazioni</h3>
+HTML
+
+my $user = $users[0];
+my @prenotazioni = $user->getElementsByTagName('prenotazione');
+if(!@prenotazioni) {
+	print "\t\t<p>Nessuna prenotazione effettuata.</p>";
+} else {
+print <<HTML;
+		<p>$user - @prenotazioni</p>
 	    <table summary="" title="Prenotazioni">
 	    	<caption>Elenco delle prenotazioni effettuate</caption>
 	    	<thead>
-	    		<tr>
-	    			<th>Film</th>
-	    			<th>Spettacolo</th>
-	    			<th>Numero di posti</th>
-	    		</tr>
+			<tr>
+				<th>Film</th>
+				<th>Spettacolo</th>
+				<th>Numero di posti</th>
+			</tr>
 	    	</thead>
 	    	<tfoot>
 		   		<tr>
@@ -77,12 +112,31 @@ print <<HTML;
 	    		</tr>
 	    	</tfoot>
 	    	<tbody>
-	    		<!-- Nessuna prenotazione -->
-	    		<tr>
-	    			<td colspan="3">Nessuna prenotazione effettuata.</td>
-	    		</tr>
-	    	</tbody>
-	    </table>
+HTML
+	foreach $prenotazione (@prenotazioni) {
+		my $id_spettacolo = $prenotazione->getChildrenByTagName('spettacolo');
+		my $posti = $prenotazione->getChildrenByTagName('posti');
+		
+		my $parser=XML::LibXML->new();
+		my $document=$parser->parse_file('xml/film.xml');
+		my $root=$document->getDocumentElement;
+		my @spettacolo=$root->findnodes("//spettacolo[\@id='$id_spettacolo']");
+		my $data = $spettacolo[0]->getChildrenByTagName('data');
+		my $ora = $spettacolo[0]->getChildrenByTagName('ora');
+		my $film = ($spettacolo[0]->parentNode())->parentNode();
+		my $titolo = $film->getChildrenByTagName('titolo');
+print <<HTML;
+				<tr>
+					<td>$titolo</td>
+					<td>$data $ora</td>
+					<td>$posti</td>
+				</tr>
+HTML
+	}
+print "\t\t</tbody>\n\t</table>\n";
+}
+
+print <<HTML;
     </div> 
     <div id="footer"> 
     	<a href="http://validator.w3.org/check?uri=referer"><span id="xhtml_valid" title="HTML 1.0 Strict valido"></span></a> 

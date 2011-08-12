@@ -1,12 +1,16 @@
+#!/usr/bin/perl
+
+print "Content-type: text/html\n\n";
+
+print <<HTML;
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Cambia password - Cinema Paradiso</title>
+    <title>Errore 404 - Cinema Paradiso</title>
     <link href="/style/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="/style/portable.css" rel="stylesheet" type="text/css" media="handheld, screen and (max-width:480px), only screen and (max-device-width:480px)" />
     <link href="/style/print.css" rel="stylesheet" type="text/css" media="print" />
-    <script type="text/javascript" src="/script/validation.js"></script>
     <link rel="shortcut icon" href="/img/cinema.ico" />
 </head>
 <body>
@@ -33,29 +37,11 @@
         </ul>
     </div>
     <div id="path">
-    	<p>Sei in: <a href="/default.html" title="">Pagina iniziale</a> &#187; Cambia password</p>
+    	<p>Sei in: <a href="/default.html" title="">Pagina iniziale</a> &#187; Errore 404</p>
     </div>
     <div id="content">
-    	<h1>Cambia password</h1>
-    	<form action="/cgi-bin/aggiorna_pwd.cgi" method="get">
-    		<fieldset>
-    			<legend>Inserisci la nuova password</legend>
-    			<label for="username">Nome utente</label>
-    			<input id="username" name="username" />
-    			<label for="pwd_corrente">Password attuale:</label>
-    			<input type="password" id="pwd_corrente" name="pwd_corrente" />
-    			<label for="pwd_nuova">Nuova password:</label>
-    			<input type="password" id="pwd_nuova" name="pwd_nuova" />
-    			<label for="pwd_nuova_conferma">Conferma nuova password:</label>
-    			<input type="password" id="pwd_nuova_conferma" name="pwd_nuova_conferma" />
-    			<input type="submit" value="Aggiorna password" />
-    			<noscript>
-				<fieldset class="script">
-					<input type="text" id="javascript" name="javascript" value="false" />
-				</fieldset>
-				</noscript>
-    		</fieldset>
-    	</form>
+    	<h1>Errore 404</h1>
+    	<p>Evidentemente qualcosa è andato storto... nessuno è perfetto!</p>
     </div>
     <div id="footer">
     	<a href="http://validator.w3.org/check?uri=referer"><span id="xhtml_valid" title="HTML 1.0 Strict valido"></span></a>
@@ -64,3 +50,4 @@
     </div>
 </body>
 </html>
+HTML
