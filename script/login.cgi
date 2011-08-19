@@ -8,7 +8,7 @@
 ######################################################
 # QUERY STRING: username, password, js_enabled
 ######################################################
-# TO DO: gestione destinazione
+# TO DO: gestione destinazione (POST) - gestione sessione
 ######################################################
 use CGI;
 use CGI::Session;
@@ -37,6 +37,11 @@ print <<HTML;
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="Autenticazione - Cinema Paradiso" name="title" />
+    <meta content="Alberto Maragno, Alessandro Benetti, Nicola Moretto" name="author" />
+    <meta content="Pagina per l'autenticazione di utenti registrati" name="description" />
+    <meta content="Cinema Paradiso" name="copyright" />
+    <meta content="cinema, paradiso, programmazione, film" name="keyword" />
     <title>Autenticazione - Cinema Paradiso</title>
     <link href="/style/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="/style/portable.css" rel="stylesheet" type="text/css" media="handheld, screen and (max-width:480px), only screen and (max-device-width:480px)" />
