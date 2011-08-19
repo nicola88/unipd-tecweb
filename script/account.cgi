@@ -8,6 +8,9 @@
 ######################################################
 # QUERY STRING: vuota
 ######################################################
+# TO DO: tabella prenotazioni
+######################################################
+
 use CGI;
 use CGI::Session;
 use XML::LibXML;
@@ -36,8 +39,13 @@ print <<HTML;
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it"> 
 <head> 
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-    <title>Pagina - Cinema Paradiso</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="Area riservata - Cinema Paradiso" name="title" />
+    <meta content="Alberto Maragno, Alessandro Benetti, Nicola Moretto" name="author" />
+    <meta content="Pagina di riepilogo delle informazioni associate ad un utente registrato" name="description" />
+    <meta content="Cinema Paradiso" name="copyright" />
+    <meta content="cinema, paradiso, programmazione, film" name="keyword" />
+    <title>Area riservata - Cinema Paradiso</title> 
     <link href="/style/screen.css" rel="stylesheet" type="text/css" media="screen" /> 
     <link href="/style/portable.css" rel="stylesheet" type="text/css" media="handheld, screen and (max-width:480px), only screen and (max-device-width:480px)" /> 
     <link href="/style/print.css" rel="stylesheet" type="text/css" media="print" /> 
@@ -91,7 +99,7 @@ HTML
 my $user = $users[0];
 my @prenotazioni = $user->getElementsByTagName('prenotazione');
 if(!@prenotazioni) {
-	print "\t\t<p>Nessuna prenotazione effettuata.</p>";
+	print "\t\<p>Nessuna prenotazione effettuata.</p>";
 } else {
 print <<HTML;
 		<p>$user - @prenotazioni</p>

@@ -27,17 +27,17 @@
 				5-6 giugno: 09.30 - 12.00 - 16.30
 				7 giugno: 11.00 - 15.00 - 20.30
 			 -->
-			<spettacolo id="godf_S1">
+			<spettacolo id="godf1">
 				<data>2011-06-05</data>
 				<ora>09:30:00</ora>
 				<posti>100</posti>
 			</spettacolo>
-			<spettacolo id="godf_S2">
+			<spettacolo id="godf2">
 				<data>2011-06-05</data>
 				<ora>13:00:00</ora>
 				<posti>100</posti>
 			</spettacolo>
-			<spettacolo id="godf_S3">
+			<spettacolo id="godf3">
 				<data>2011-06-05</data>
 				<ora>16:30:00</ora>
 				<posti>150</posti>
