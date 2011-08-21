@@ -1,20 +1,74 @@
-/* DEFAULT */
+body {
+	font-family: Verdana,"Lucida Grande","DejaVu Sans",sans-serif;
+	background-color: #EFEFEF;
+	margin: 0 10%;
+}
 
-div, dl, dd {
+a, div, dl, dd, h1, h2, h3, h4, p {
 	border: 0;
 	margin: 0;
 	padding: 0;
 }
 
-dt {
-	/*float: left;*/
-	font-weight: bold;
+a:hover {
+	font-variant: small-caps;
 }
 
+dt {
+	float: left;
+	font-weight: bold;
+	padding-right: 0.4em;
+}
+
+h1 {
+	font-size: 2.2em;
+	padding: 0.2em 0;
+}
+
+h2 {
+	font-size: 1.2em;
+	margin-bottom: 0.5em;
+}
+
+/* Nelle pagine che usano javascript, nasconde il fieldset contenente il campo nascosto addizionale */
 .script {
 	display: none;
 }
 
-form strong {
-	font-weight: bold;
+/* HEADER */
+
+#skip_nav {
+	position: absolute;
+	height: 0;
+	overflow: hidden;
 }
+
+#header {
+	float: left;
+}
+
+#header a {
+	color: #034CA5;
+	font-variant: normal;
+	padding: 0.2em 0;
+	text-decoration: none;
+}
+
+#account {
+	padding-top: 0.4em;
+	float: right;
+}
+
+/* NAVIGATION */
+
+#navigation {
+	clear: both;
+}
+
+/* CONTENT */
+
+#content {
+	background-color: white;
+}
+
+/* FOOTER */
