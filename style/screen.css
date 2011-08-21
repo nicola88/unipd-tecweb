@@ -4,7 +4,7 @@ body {
 	margin: 0 10%;
 }
 
-a, div, dl, dd, h1, h2, h3, h4, p {
+a, div, dl, dd, h1, h2, h3, p, ul {
 	border: 0;
 	margin: 0;
 	padding: 0;
@@ -20,14 +20,8 @@ dt {
 	padding-right: 0.4em;
 }
 
-h1 {
-	font-size: 2.2em;
-	padding: 0.2em 0;
-}
-
-h2 {
-	font-size: 1.2em;
-	margin-bottom: 0.5em;
+ul {
+	list-style-type: none;
 }
 
 /* Nelle pagine che usano javascript, nasconde il fieldset contenente il campo nascosto addizionale */
@@ -36,7 +30,6 @@ h2 {
 }
 
 /* HEADER */
-
 #skip_nav {
 	position: absolute;
 	height: 0;
@@ -54,21 +47,94 @@ h2 {
 	text-decoration: none;
 }
 
+#header h1 {
+	font-size: 2.4em;
+	padding: 0.2em 0;
+}
+
+#header h2 {
+	font-size: 1.2em;
+	margin-bottom: 0.5em;
+}
+
 #account {
 	padding-top: 0.4em;
 	float: right;
 }
 
 /* NAVIGATION */
-
 #navigation {
 	clear: both;
 }
 
 /* CONTENT */
-
-#content {
+#content, #path {
 	background-color: white;
+	padding: 0.4em 2%;
+}
+
+#indice {
+	margin: 0.8em 0 1.6em 0;
+}
+
+#indice li {
+	display: inline;
+	background-color: #EFEFEF;
+	border: 1px dotted #505050;
+	padding: 0.3em;
+}
+
+#content h2 {
+	background-color: #EFEFEF;
+	border-top: 1px solid #505050;
+	clear: both;
+	color: #02408D;
+	font-size: 1.4em;
+	margin: 0.5em 0;
+	padding: 0.3em 0.6em;	
+}
+
+#content h3 {
+	font-size: 1.2em;
+	margin: 0.2em 0 0.3em 0;
+}
+
+#content p {
+	line-height: 1.5;
+	text-align: justify;
+}
+
+.film {
+	clear: both;
+	padding-top: 0.4em;
+}
+
+.informazioni {
+	line-height: 1.8;
+	margin-bottom: 1em;
+}
+
+.locandina {
+	float: left;
+	margin: 0 1.2em 0.8em 0;
+}
+
+.link a, .link span {
+	background-color: #EFEFEF;
+	border: solid #505050 1px;
+	padding: 0.2em 0.5em;
+}
+
+.scheda {
+	line-height: 2;
+}
+
+#tagline {
+	font-style: italic;
 }
 
 /* FOOTER */
+
+#footer {
+	clear: both;
+}
