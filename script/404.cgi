@@ -19,34 +19,9 @@ print <<HTML;
     	<h1><a href="/default.html" title="Pagina iniziale">Cinema Paradiso</a></h1>
     	<h2>Programmazione e prenotazioni online</h2>
     </div>
-    <div id="account">
-    	<p><a href="/cgi-bin/account.cgi" accesskey="8" title="Area riservata">Area riservata</a> | <a href="/registrazione.html" accesskey="9" title="Registrazione">Registrati</a></p>
-    </div>
-    <div id="navigation">
-    	<ul>
-        	<li><a href="/default.html" accesskey="0">Pagina iniziale</a>
-        	</li>
-            <li><a href="/film.html" accesskey="1">Film</a>
-            </li>
-            <li><a href="/programmazione.html" accesskey="2">Programmazione</a>
-            </li>
-            <li><a href="/informazioni.html" accesskey="3">Informazioni</a>
-            </li>
-            <li><a href="/cgi-bin/notizie.cgi" accesskey="4">Notizie</a>
-            </li>
-        </ul>
-    </div>
-    <div id="path">
-    	<p>Sei in: <a href="/default.html" title="">Pagina iniziale</a> &#187; Errore 404</p>
-    </div>
     <div id="content">
     	<h1>Errore 404</h1>
     	<p>Evidentemente qualcosa è andato storto... nessuno è perfetto!</p>
-    </div>
-    <div id="footer">
-    	<a href="http://validator.w3.org/check?uri=referer"><span id="xhtml_valid" title="HTML 1.0 Strict valido"></span></a>
-    	<span id="css_valid" title="CSS 2.1 valido"></span>
-    	<p>Cinema Paradiso - Via Guardiani della Notte, 15 (AR)</p>
     </div>
 </body>
 </html>
