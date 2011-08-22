@@ -17,9 +17,11 @@ use Digest::MD5 qw(md5_hex);
 print "Content-type: text/html\n\n";
 
 # 1. LETTURA INPUT
-# - Lettura valori dei parametri della query string
-# - Verifica se si tratta della prima invocazione
-# - Verifica abilitazione javascript lato client
+# CASO 1: l'utente arriva da una pagina differente accessibile solo previa autenticazione
+# - Viene caricata una semplice pagina web per effettuare il login
+# CASO 2: l'utente arriva da un'invocazione precedente della stessa pagina (tentativo di login fallito)
+# - Vengono letti i valori dei parametri 'username' e 'password' inseriti e si determina se j
+# - Si determina se javscript lato client è abilitato o meno
 my $cgi=new CGI;
 my $username=$cgi->param('username');
 my $password=$cgi->param('password');
@@ -79,12 +81,16 @@ print <<HTML;
         <h1>Autenticazione</h1>
 HTML
 
+# 2. VALIDAZIONE INPUT
+# PRECONDIZIONI: javascript lato client disabilitato
+# - nessuno campo deve essere vuoto
+# - username e password devono avere lunghezza minima rispettivamente di 3 e 6 caratteri
+# - username e password possono contenere qualsiasi carattere (spazi esclusi)
+# Se i dati inseriti dall'utente non sono accettabili, stampo la
+# pagina di login con indicate le irregolarità riscontrate.
 my $msg;
 my $validInput=1;
 if($first_invocation==0 ) {
-	# 2. VALIDAZIONE INPUT - javascript==0 => da saltare
-	# - username: lunghezza minima: 3 caratteri - ammessi tutti i caratteri (spazi esclusi)
-	# - password: lunghezza minima: 6 caratteri - ammessi tutti i caratteri (spazi esclusi)
 	$msg = "\t\t<ul>\n";
 	if($username eq "") {
 		$msg = $msg . "\t\t\t<li>Il campo <strong>username</strong> &egrave; obbligatorio.</li>\n";
@@ -102,21 +108,29 @@ if($first_invocation==0 ) {
 	}
 	$msg = $msg . "\t\t</ul>\n";
 	if(!$validInput) {print $msg;}
-	
-	# 3. AUTENTICAZIONE
-	my $parser=XML::LibXML->new();
-	my $document=$parser->parse_file('xml/utenti.xml');
-	my $root=$document->getDocumentElement;
-	my @users=$root->findnodes("//utente[username='$username' and password='$password']");
-	if(@users) {
-		# l'array @users contiene l'utente cercato
-		#my $session=CGI::Session->new(undef,undef,{Directory=>'../tmp'});
-		#$session->param('username',$username);
-		#$session->param('password',$password);
-		#$session->expire('+30m'); # scadenza della sessione (30 minuti)
-		#my $session_id=$session->id();
-		#print "Location: ../cgi-bin/account.cgi\n\n";
-		#### QUI FINISCONO I PROBLEMI... ####
+	else {
+		# 3. AUTENTICAZIONE
+		# PRECONDIZIONI: validazione input terminata correttamente
+		# Si verifica l'esistenza di un utente con le credenziali inserite
+		# - CASO 1: credenziali corrette => creazione nuova sessione e reindirizzamento verso la pagina di destinazione
+		# - CASO 2: credenziali errate: mostra la pagina di login segnalando il problema
+		my $parser=XML::LibXML->new();
+		my $document=$parser->parse_file('xml/utenti.xml');
+		my $root=$document->getDocumentElement;
+		my @users=$root->findnodes("//utente[username='$username' and password='$password']");
+		if(@users) {
+			# QUI creo la nuova sessione e reindirizzo a destinazione
+			# l'array @users contiene l'utente cercato
+			#my $session=CGI::Session->new(undef,undef,{Directory=>'../tmp'});
+			#$session->param('username',$username);
+			#$session->param('password',$password);
+			#$session->expire('+30m'); # scadenza della sessione (30 minuti)
+			#my $session_id=$session->id();
+			#print "Location: ../cgi-bin/account.cgi\n\n";
+			#### QUI FINISCONO I PROBLEMI... ####
+		} else {
+			$msg = "\t\t<p>Nome utente e password inserite non corrispondono ad alcun utente registrato.</p>";
+		}
 	}
 }
 

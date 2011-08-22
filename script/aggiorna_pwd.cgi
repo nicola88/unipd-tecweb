@@ -15,6 +15,8 @@ use Digest::MD5 qw(md5_hex);
 print "Content-type: text/html\n\n";
 
 # 1. LETTURA INPUT
+# Lettura valori dei parametri ricevuti dalla form della pagina di aggiornamento
+# della password (username, password corrente e nuova con conferma, javascript)
 my $cgi=new CGI;
 my $username = $cgi->param('username');
 my $pwd_corrente = $cgi->param('pwd_corrente');
@@ -75,10 +77,17 @@ print <<HTML;
     	</ul>
 HTML
 
+# 2. VALIDAZIONE INPUT
+# PRECONDIZIONE: javascript disabilitato lato client
+# Valida i valori dei parametri ricevuti:
+# - nessuno campo deve essere vuoto
+# - username e password devono corrispondere ad un utente esistente
+# - la nuova password deve contenere almeno 6 caratteri qualsiasi (eccetto gli spazi)
+# Se i dati inseriti dall'utente non sono corretti, viene visualizzata nuovamente la
+# pagina corrente con indicati gli errori riscontrati.
 my $msg;
 my $validInput=1;
 if(defined($javascript)) {
-	# 2. VALIDAZIONE INPUT
 	$msg = "\t\t<ul>\n";
 	if($username eq "") {
 		$msg = $msg . "\t\t\t<li>Il campo <strong>Nome utente</strong> &egrave; obbligatorio.</li>\n";
@@ -115,7 +124,6 @@ if(defined($javascript)) {
 	$msg = "\t\t</ul>\n";
 	if($validInput==0) {print $msg;}
 }
-
 if($validInput==1) {
 	$pwd_corrente = md5_hex($pwd_corrente);
 	my $parser=XML::LibXML->new();
@@ -124,7 +132,9 @@ if($validInput==1) {
 	@users=$root->findnodes("//utente[username='$username' and password='$pwd_corrente']");
 	print "\t\t\t<p>@users</p>";
 	if(@users) {
-		# 3. AGGIORNAMENTO PASSWORD su XML
+		# 3. AGGIORNAMENTO PASSWORD
+		# PRECONDIZIONE: i valori ricevuti sono stati validati correttamente
+		# Aggiorno la password dell'utente 'username'
 		$pwd_nuova=md5_hex($pwd_nuova);
 		# $user = $users[0];
 	} else {
