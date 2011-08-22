@@ -20,8 +20,25 @@ dt {
 	padding-right: 0.4em;
 }
 
+fieldset {
+	background-color: #EFEFEF;
+	padding: 0.6em;
+}
+
+form input {
+	padding: 0.2em;
+}
+
+legend {
+	color: #034CA5;
+}
+
 ul {
 	list-style-type: none;
+}
+
+#navigation, #path, #content, #footer {
+	clear: both;
 }
 
 /* Nelle pagine che usano javascript, nasconde il fieldset contenente il campo nascosto addizionale */
@@ -48,13 +65,13 @@ ul {
 }
 
 #header h1 {
-	font-size: 2.4em;
+	font-size: 2.2em;
 	padding: 0.2em 0;
 }
 
 #header h2 {
-	font-size: 1.2em;
-	margin-bottom: 0.5em;
+	font-size: 1em;
+	margin-bottom: 0.6em;
 }
 
 #account {
@@ -63,8 +80,23 @@ ul {
 }
 
 /* NAVIGATION */
-#navigation {
-	clear: both;
+#navigation a {
+	padding: 0.4em 1em;
+}
+
+#navigation li {
+	float:left;
+	border-right: 1px dotted black;
+	padding: 0.4em 0;
+}
+
+#navigation li:hover, #navigation li#current {
+	background-color: white;
+}
+
+#navigation li#current {
+	padding: 0.4em 2%;
+	font-weight: bold;
 }
 
 /* CONTENT */
@@ -78,7 +110,7 @@ ul {
 }
 
 #indice li {
-	display: inline;
+	display: inline-block;
 	background-color: #EFEFEF;
 	border: 1px dotted #505050;
 	padding: 0.3em;
