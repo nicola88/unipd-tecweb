@@ -16,7 +16,8 @@ use Digest::MD5 qw(md5_hex);
 print "Content-type: text/html\n\n";
 
 # 1. LETTURA INPUT
-# - Lettura valori dei parametri della query string
+# - Lettura valori dei parametri dalla pagina di registrazione
+# (nome, cognome, email, username, password con conferma)
 # - Verifica abilitazione javascript lato client
 my $cgi=new CGI;
 my $nome = $cgi->param('nome');
@@ -74,8 +75,9 @@ print <<HTML;
     	<h1>Registrazione</h1>
 HTML
 
-# 2. VALIDAZIONE INPUT - javascript==0 => da saltare
-# - email: formato a@b.c (ove a, b e c sono stringhe contenenti caratteri alfanumerici, '-', '+' e '.'
+# 2. VALIDAZIONE INPUT
+# PRECONDIZIONE: javascript disabilitato lato client
+# - email: formato a@b.c (ove a, b e c sono stringhe contenenti caratteri alfanumerici, '-', '+' e '.')
 # - username: lunghezza minima: 3 caratteri - ammessi tutti i caratteri (spazi esclusi)
 # - password[_confirm]: lunghezza minima: 6 caratteri - ammessi tutti i caratteri (spazi esclusi)
 my $msg;
@@ -127,8 +129,8 @@ else {
 }
 if($validInput==1) {
 	# 3. REGISTRAZIONE su XML
-	# Se i valori immessi sono corretti, le informazioni vengono salvate nel file XML
-	# altrimenti viene mostrata la form di registrazione con il riepilogo degli errori riscontrati.
+	# - Se i valori immessi sono corretti, le informazioni vengono salvate nel file XML
+	# - Altrimenti, viene mostrata la form di registrazione con il riepilogo degli errori riscontrati
 	my $file='xml/utenti.xml';
 	my $parser=XML::LibXML->new();
 	my $document=$parser->parse_file('xml/utenti.xml');

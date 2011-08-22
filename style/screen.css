@@ -37,7 +37,7 @@ ul {
 	list-style-type: none;
 }
 
-#navigation, #path, #content, #footer {
+#navigation, #path, #content, #footer, p {
 	clear: both;
 }
 
@@ -136,14 +136,20 @@ ul {
 	text-align: justify;
 }
 
+.anteprima {
+	float: left;
+	padding: 0 1%;
+	text-align: center;
+}
+
 .film {
 	clear: both;
-	padding-top: 0.4em;
+	margin-top: 0.8em;
 }
 
 .informazioni {
 	line-height: 1.8;
-	margin-bottom: 1em;
+	margin-bottom: 0.6em;
 }
 
 .locandina {
@@ -168,5 +174,11 @@ ul {
 /* FOOTER */
 
 #footer {
-	clear: both;
+	background-color: #505050;
+	color: white;
+	padding: 0.6em 2%;
+}
+
+#footer p {
+	text-align: center;
 }

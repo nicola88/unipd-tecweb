@@ -26,6 +26,9 @@ my $username='nmoretto'; # $session->param('username');
 my $password='d0ef51379636616a1e351fa3bec115e6'; # $session->param('password'); # hash MD5!
 
 # 2. LETTURA INFORMAZIONI UTENTE da XML
+# PRECONDIZIONI: recuperate con successo le informazioni (username, password) della sessione corrente
+# Cerco nel file utenti.xml un elemento 'utente' con
+# username e password corrispondenti ai valori della sessione
 my $parser=XML::LibXML->new();
 my $document=$parser->parse_file('xml/utenti.xml');
 my $root=$document->getDocumentElement;
@@ -34,7 +37,6 @@ my $nome=$users[0]->getElementsByTagName('nome');
 my $cognome=$users[0]->getElementsByTagName('cognome');
 my $email=$users[0]->getElementsByTagName('email');
 
-# 3. GENERAZIONE PAGINA WEB
 print <<HTML;
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it"> 
@@ -96,6 +98,11 @@ print <<HTML;
 	    <h3 id="prenotazioni">Prenotazioni</h3>
 HTML
 
+# 3. SEZIONE PRENOTAZIONI
+# Inserisce nella pagina web le prenotazioni associate all'utente corrente
+# - nessuna prenotazione: viene stampata la stringa 'Nessuna prenotazione effettuata';
+# - 1+ prenotazioni: viene creata una tabella a tre colonne (film, spettacolo, posti prenotati)
+# con la lista delle prenotazioni
 my $user = $users[0];
 my @prenotazioni = $user->getElementsByTagName('prenotazione');
 if(!@prenotazioni) {
