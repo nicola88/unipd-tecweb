@@ -130,6 +130,7 @@ if($first_invocation==0 ) {
 			#### QUI FINISCONO I PROBLEMI... ####
 		} else {
 			$msg = "\t\t<p>Nome utente e password inserite non corrispondono ad alcun utente registrato.</p>";
+			print $msg;
 		}
 	}
 }
@@ -143,7 +144,7 @@ print <<HTML;
 				<input id="username" name="username" />
 				<label for="password">Password</label>
 				<input type="password" id="password" name="password" />
-				<input type="submit" value="Accedi" />
+				<input type="submit" value="Accedi" onclick="return checkLogin()" />
 			</fieldset>
 			<noscript>
 			<fieldset class="script">
