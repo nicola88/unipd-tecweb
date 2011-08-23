@@ -20,6 +20,10 @@ dt {
 	padding-right: 0.4em;
 }
 
+.errore {
+	border: 2px solid red;
+}
+
 fieldset {
 	background-color: #EFEFEF;
 	padding: 0.6em;
@@ -103,6 +107,10 @@ ul {
 #content, #path {
 	background-color: white;
 	padding: 0.4em 2%;
+}
+
+#content {
+	padding-bottom: 1em;
 }
 
 #indice {

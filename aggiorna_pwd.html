@@ -42,7 +42,7 @@
     </div>
     <div id="content">
     	<h1>Cambia password</h1>
-    	<form action="/cgi-bin/aggiorna_pwd.cgi" method="get">
+    	<form action="/cgi-bin/aggiorna_pwd.cgi" method="get" id="aggiorna_password">
     		<fieldset>
     			<legend>Inserisci la nuova password</legend>
     			<label for="username">Nome utente</label>
@@ -53,7 +53,7 @@
     			<input type="password" id="pwd_nuova" name="pwd_nuova" />
     			<label for="pwd_nuova_conferma">Conferma nuova password:</label>
     			<input type="password" id="pwd_nuova_conferma" name="pwd_nuova_conferma" />
-    			<input type="submit" value="Aggiorna password" />
+    			<input type="submit" value="Aggiorna password" onclick="return updatePassword()" />
     			<noscript>
 				<fieldset class="script">
 					<input type="text" id="javascript" name="javascript" value="false" />
