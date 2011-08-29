@@ -8,6 +8,7 @@
 # QUERY STRING: vuota
 ######################################################
 use CGI;
+use Encode;
 use XML::LibXML;
 print "Content-type: text/html\n\n";
 
@@ -75,7 +76,7 @@ print "\t\t<h2 id=\"uscite\">Film e programmazione</h2>\n";
 		foreach $notizia (@notizie_film) {
 			my $data = $notizia->getChildrenByTagName('data');
 			my $titolo = $notizia->getChildrenByTagName('titolo');
-			my $descrizione = $notizia->getChildrenByTagName('descrizione');
+			my $descrizione = encode("utf-8",$notizia->getChildrenByTagName('descrizione'));
 print <<HTML;
 		<div class="notizia">
 			<h3><span class="data">$data</span> - $titolo</h3>

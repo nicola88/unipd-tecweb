@@ -8,13 +8,20 @@
 		<password>d0ef51379636616a1e351fa3bec115e6</password> <!-- pistola -->
 		<prenotazioni>
 			<prenotazione>
-				<spettacolo>godf_S2</spettacolo>
+				<spettacolo>godf_S4</spettacolo>
 				<posti>5</posti>
 			</prenotazione>
 		</prenotazioni>
 	</utente>
+	<utente>
+		<nome>Alberto</nome>
+		<cognome>Maragno</cognome>
+		<email>alberto.maragno@myemail.com</email>
+		<username>albertom</username>
+		<password>61fa153f2827c887a48a351ae3c6cfd3</password> <!-- debugger -->
+		<prenotazioni/>
+	</utente>
 </utenti>
-
 <!--
 xmlns="http://progetto-tecweb/utenti"
 xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"

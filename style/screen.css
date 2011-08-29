@@ -14,6 +14,10 @@ a:hover {
 	font-variant: small-caps;
 }
 
+dl {
+	margin-bottom: 0.5em;
+}
+
 dt {
 	float: left;
 	font-weight: bold;
@@ -35,6 +39,30 @@ form input {
 
 legend {
 	color: #034CA5;
+}
+
+table {
+	text-align: center;
+}
+
+td {
+	border: 1px dotted black;
+	padding: 0.4em;
+}
+
+td.film {
+	font-weight: bold;
+	padding: 0.2em 0.5em;
+}
+
+th {
+	background-color: #EFEFEF;
+	color: #02408D;
+	padding: 0.4em;	
+}
+
+tr.pari {
+	background-color: #DBEAFF;
 }
 
 ul {
@@ -124,18 +152,22 @@ ul {
 	padding: 0.3em;
 }
 
+#content h1 {
+	font-size: 1.8em;
+}
+
 #content h2 {
 	background-color: #EFEFEF;
 	border-top: 1px solid #505050;
 	clear: both;
 	color: #02408D;
-	font-size: 1.4em;
-	margin: 0.5em 0;
+	font-size: 1.2em;
+	margin: 1em 0 0.5em 0;
 	padding: 0.3em 0.6em;	
 }
 
 #content h3 {
-	font-size: 1.2em;
+	font-size: 1em;
 	margin: 0.2em 0 0.3em 0;
 }
 
