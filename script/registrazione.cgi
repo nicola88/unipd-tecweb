@@ -1,33 +1,137 @@
 #!/usr/bin/perl
 
-######################################################
-# NOME: registrazione_conferma.cgi
-######################################################
-# DESCRIZIONE: elabora le informazioni necessarie alla
-# registrazione di un utente
-######################################################
-# QUERY STRING: nome, cognome, email, username,
-# password, password_confirm, javascript
-######################################################
+# NOME
+# registrazione.cgi
+
+# DESCRIZIONE
+# Gestisce la registrazione di un nuovo utente.
+
+# QUERY STRING
+# nome, cognome, email, username, password, password_confirm, javascript
+
 use CGI;
 use CGI::Session;
 use XML::LibXML;
 use Digest::MD5 qw(md5_hex);
-print "Content-type: text/html\n\n";
 
-# 1. LETTURA INPUT
-# - Lettura valori dei parametri dalla pagina di registrazione
-# (nome, cognome, email, username, password con conferma)
-# - Verifica abilitazione javascript lato client
-my $cgi=new CGI;
-my $nome = $cgi->param('nome');
-my $cognome = $cgi->param('cognome');
-my $email = $cgi->param('email');
-my $username = $cgi->param('username');
-my $password = $cgi->param('password');
-my $password_confirm = $cgi->param('password_confirm');
-my $javascript = $cgi->param('javascript');
+# (1) VERIFICA AUTENTICAZIONE UTENTE
+# Verifico se l'utente è autenticato (in caso affermativo, redireziono alla
+# pagina dell'area utente).
+$session=CGI::Session->load();
+if(!$session->is_expired && !$session->is_empty){
+	# utente autenticato
+	print "Location: account.cgi\n\n";
+}
+else{
+	# utente non autenticato
+	# (2) LETTURA INPUT FORM
+	# Leggo i valori ricevuti in input: nome, cognome, email, username, password,
+	# conferma della password e JavaScript.
+	my $cgi=new CGI;
+	my $name=$cgi->param('nome');
+	my $surname=$cgi->param('cognome');
+	my $email=$cgi->param('email');
+	my $username=$cgi->param('username');
+	my $password=$cgi->param('password');
+	my $password_confirm=$cgi->param('password_confirm');
+	my $javascript=$cgi->param('javascript');
+	# (2) VALIDAZIONE INPUT (JAVASCRIPT DISABILITATO)
+	# Se JavaScript è disabilitato lato client, valido i valori in input secondo i
+	# seguenti vincoli:
+	# - nessuno dei campo dati deve essere vuoto;
+	# - lo username deve contenere almeno 3 caratteri qualsiasi, spazi esclusi;
+	# - la password e la relativa conferma devono contenere almeno 6 caratteri
+	#   qualsiasi, spazi esclusi;
+	# - l'email deve soddisfare il formato standard degli indirizzi di posta
+	#   elettronica (ossia x@y, dove x è una sequenza di UNA o più stringhe
+	#   separate dal carattere punto '.' e formate da caratteri alfanumerici e dai
+	#   caratteri meno '-' e più '+', mentre y è una sequenza di DUE o più
+	#   stringhe separate dal carattere punto '.' e formate da caratteri
+	#   alfanumerici e dai caratteri meno '-' e più '+').
+	# Se i valori in input non superano la validazione, ristampo la pagina di
+	# registrazione indicando gli errori riscontrati.
+	my $error;
+	my $correct_input=1;
+	if(defined($javascript)){
+		$error="\t\t<ul>\n";
+		if($name eq ""){
+			$error=$error."\t\t\t<li>Il campo <strong>Nome</strong> &egrave; obbligatorio.</li>\n";
+			$correct_input=0;
+		}
+		if($surname eq ""){
+			$error=$error."\t\t\t<li>Il campo <strong>Cognome</strong> &egrave; obbligatorio.</li>\n";
+			$correct_input=0;
+		}
+		if($email eq ""){
+			$error=$error."\t\t\t<li>Il campo <strong>Posta elettronica</strong> &egrave; obbligatorio.</li>\n";
+			$correct_input=0;
+		}elsif($email!~/^[\w\-\+\.]+@[\w\-\+\.]+\.[\w\-\+\.]+$/){
+			$error=$error."\t\t\t<li>Il valore immesso nel campo <strong>Posta elettronica</strong> deve essere del tipo x\@x.x (dove x rappresenta una sequenza lunga almeno un carattere e formata da caratteri alfanumerici, '-', '+' e '.').</li>\n";
+			$correct_input=0;
+		}
+		if($username eq ""){
+			$error=$error."\t\t\t<li>Il campo <strong>Nome utente</strong> &egrave; obbligatorio.</li>\n";
+			$correct_input=0;
+		}elsif($username!~/^\S{3,}$/){
+			$error=$error."\t\t\t<li>Il valore immesso nel campo <strong>Nome utente</strong> deve contenere almeno 3 caratteri (spazi non ammessi).</li>\n";
+			$correct_input=0;
+		}
+		if($password eq ""){
+			$error=$error."\t\t\t<li>Il campo <strong>Password</strong> &egrave; obbligatorio.</li>\n";
+			$correct_input=0;
+		}elsif($password!~/^\S{6,}$/){
+			$error=$error."\t\t\t<li>Il valore immesso nel campo <strong>Password</strong> deve contenere almeno 6 caratteri (spazi non ammessi).</li>\n";
+			$correct_input=0;
+		}
+		if($password_confirm eq ""){
+			$error=$error."\t\t\t<li>Il campo <strong>Conferma password</strong> &egrave; obbligatorio.</li>\n";
+			$correct_input=0;
+		}elsif($password_confirm!~/^\S{6,}$/){
+			$error=$error."\t\t\t<li>Il valore immesso nel campo <strong>Conferma password</strong> deve contenere almeno 6 caratteri (spazi non ammessi).</li>\n";
+			$correct_input=0;
+		}
+		if($password ne $password_confirm){
+			$error=$error."\t\t\t<li>Le password fornite non coincidono.</li>\n";
+			$correct_input=0;
+		}
+		$error=$error."\t\t</ul>\n";
+		if($correct_input==1){
+			$error=undef; # ripulisco $error
+		}
+	}
+	if($correct_input==1){
+		# (3) REGISTRAZIONE NUOVO UTENTE
+		# Memorizzo le informazioni del nuovo utente, inizializzo una sessione sul
+		# server e redireziono alla pagina dell'area utente.
+		my $password=md5_hex($password);
+		my $parser=XML::LibXML->new();
+		my $document=$parser->parse_file('xml/utenti.xml');
+		my $root=$document->getDocumentElement;
+		my @users=$root->findnodes("//utenti");
+		my $new_user="\t<utente>\n\t\t<nome>$name</nome>\n\t\t<cognome>$surname</cognome>\n\t\t<email>$email</email>\n\t\t<username>$username</username>\n\t\t<password>$password</password>\n\t\t<prenotazioni />\n\t</utente>\n";
+		my $fragment=$parser->parse_balanced_chunk($new_user);
+		$users[0]->appendChild($fragment); # $users[0] è il nodo 'utenti' (non il primo figlio 'utente' del nodo 'utenti')
+		open(OUT,">xml/utenti.xml");
+		print OUT $document->toString;
+		close(OUT);
+		my $session=CGI::Session->new();
+		my $cookie=$cgi->cookie(-name=>$session->name,
+		                        -value=>$session->id);
+		print $cgi->header(-cookie=>$cookie);
+		$session->param('username',$username);
+		$session->param('password',$password);
+		$session->expire('+20m'); # scadenza della sessione = 20 minuti
+		&redirect_to_account_page();
+	}
+	else{
+		&print_registration_page($error,$name,$surname,$email,$username);
+	}
+}
 
+# FUNZIONE N°1: STAMPA PAGINA REGISTRAZIONE
+sub print_registration_page{
+	print "Content-type: text/html\n\n";
+	# prima parte del codice XHTML della pagina
 print <<HTML;
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
@@ -35,10 +139,10 @@ print <<HTML;
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta content="Registrazione utente - Cinema Paradiso" name="title" />
     <meta content="Alberto Maragno, Alessandro Benetti, Nicola Moretto" name="author" />
-    <meta content="Pagina di elaborazione della procedura di registrazione di un utente" name="description" />
+    <meta content="Pagina di registrazione di un utente" name="description" />
     <meta content="Cinema Paradiso" name="copyright" />
     <meta content="cinema, paradiso, programmazione, film" name="keyword" />
-    <title>Registrazione - Cinema Paradiso</title>
+    <title>Registrazione utente - Cinema Paradiso</title>
     <link href="/style/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="/style/portable.css" rel="stylesheet" type="text/css" media="handheld, screen and (max-width:480px), only screen and (max-device-width:480px)" />
     <link href="/style/print.css" rel="stylesheet" type="text/css" media="print" />
@@ -74,90 +178,24 @@ print <<HTML;
     <div id="content">
     	<h1>Registrazione</h1>
 HTML
-
-# 2. VALIDAZIONE INPUT
-# PRECONDIZIONE: javascript disabilitato lato client
-# - email: formato a@b.c (ove a, b e c sono stringhe contenenti caratteri alfanumerici, '-', '+' e '.')
-# - username: lunghezza minima: 3 caratteri - ammessi tutti i caratteri (spazi esclusi)
-# - password[_confirm]: lunghezza minima: 6 caratteri - ammessi tutti i caratteri (spazi esclusi)
-my $msg;
-if(defined($javascript)) {$javascript=1;}
-else {
-	$validInput=1;
-	$msg = "\t\t<ul>\n";
-	if($nome eq "") {
-		$msg = $msg . "\t\t\t<li>Il campo <strong>Nome</strong> &egrave; obbligatorio.</li>\n";
-		$validInput=0;
-	}
-	if($cognome eq "") {
-		$msg = $msg . "\t\t\t<li>Il campo <strong>Cognome</strong> &egrave; obbligatorio.</li>\n";
-		$validInput=0;
-	}
-	if($email eq "") {
-		$msg = $msg . "\t\t\t<li>Il campo <strong>Posta elettronica</strong> &egrave; obbligatorio.</li>\n";
-		$validInput=0;
-	} elsif($email!~/^[\w\-\+\.]+@[\w\-\+\.]+\.[\w\-\+\.]+$/) {
-		$msg = $msg . "\t\t\t<li>Il valore immesso nel campo <strong>Posta elettronica</strong> dev'essere del tipo x\@x.x (ove x rappresenta una sequenza di almeno 1 carattere).</li>\n";
-		$validInput=0;
-	}
-	if($username eq "") {
-		$msg = $msg . "\t\t\t<li>Il campo <strong>Nome utente</strong> &egrave; obbligatorio.</li>\n";
-		$validInput=0;
-	} elsif($username!~/^\S{3,}$/) {
-		$msg = $msg . "\t\t\t<li>Il valore immesso nel campo <strong>Nome utente</strong> deve contenere almeno 3 caratteri (spazi non ammessi).</li>\n";
-		$validInput=0;
-	}
-	if($password eq "") {
-		$msg = $msg . "\t\t\t<li>Il campo <strong>Password</strong> &egrave; obbligatorio.</li>\n";
-		$validInput=0;
-	} elsif($password!~/^\S{6,}$/) {
-		$msg = $msg . "\t\t\t<li>Il valore immesso nel campo <strong>Password</strong> deve contenere almeno 6 caratteri (spazi non ammessi).</li>\n";
-		$validInput=0;
-	}
-	if($password_confirm eq "") {
-		$msg = $msg . "\t\t\t<li>Il campo <strong>Conferma password</strong> &egrave; obbligatorio.</li>\n";
-		$validInput=0;
-	} elsif($password_confirm!~/^\S{6,}$/) {
-		$msg = $msg . "\t\t\t<li>Il valore immesso nel campo <strong>Conferma password</strong> deve contenere almeno 6 caratteri (spazi non ammessi).</li>\n";
-		$validInput=0;
-	}
-	if($password ne $password_confirm) {
-		$msg = $msg . "\t\t\t<li>Le password fornite non coincidono.</li>\n";
-		$validInput=0;
-	}
-	$msg = $msg . "\t\t</ul>\n";
-}
-if($validInput==1) {
-	# 3. REGISTRAZIONE su XML
-	# - Se i valori immessi sono corretti, le informazioni vengono salvate nel file XML
-	# - Altrimenti, viene mostrata la form di registrazione con il riepilogo degli errori riscontrati
-	my $file='xml/utenti.xml';
-	my $parser=XML::LibXML->new();
-	my $document=$parser->parse_file('xml/utenti.xml');
-	my $root=$document->getDocumentElement;
-	#my @users=$root->findnodes("/utenti");
-	#my $new_user="<utente><nome>$name</nome><cognome>$surname</cognome><email>$email</email><username>$username</username><password>$password</password><prenotazioni /></utente>";
-	#my $fragment=$parser->parse_balanced_chunk($new_user);
-	#my $position=@users;
-	#@users[$position]->appendChild($fragment);
-	print "\t\t<p>La procedura di registrazione è terminata correttamente. &Egrave; possibile accedere all'area riservata a <a href=\"/cgi/bin/account.cgi\" title=\"Area riservata\">questo indirizzo</a>.</p>";
-} else {
-	print $msg;
-print <<FORM;
-        <form action="/cgi-bin/registrazione.cgi" method="get" id="registrazione">
+	# messaggi di avviso per l'utente
+	print $_[0];
+	# seconda parte del codice XHTML della pagina
+print <<HTML;
+       <form action="/cgi-bin/registrazione.cgi" method="get" id="registrazione">
 		    <fieldset>
 				<legend>Informazioni personali</legend>
 				<label for="nome">Nome</label>
-				<input name="nome" id="nome" value="$nome" />
+				<input name="nome" id="nome" value="$_[1]" />
 				<label for="cognome">Cognome</label>
-				<input id="cognome" name="cognome" value="$cognome"/>
+				<input id="cognome" name="cognome" value="$_[2]" />
 				<label for="email">Posta elettronica</label>
-				<input id="email" name="email" value="$email" />
+				<input id="email" name="email" value="$_[3]" />
 			</fieldset>
 			<fieldset>
 				<legend>Informazioni del profilo</legend>
 				<label for="username">Nome utente</label>
-				<input id="username" name="username" value="$username" />
+				<input id="username" name="username" value="$_[4]" />
 				<label for="password">Password</label>
 				<input type="password" id="password" name="password"/>
 				<label for="password_confirm">Conferma password</label>
@@ -170,10 +208,6 @@ print <<FORM;
 			</fieldset>
 			</noscript>
 		</form>
-FORM
-}
-
-print <<HTML;
     </div>
     <div id="footer">
     	<a href="http://validator.w3.org/check?uri=referer"><span id="xhtml_valid" title="HTML 1.0 Strict valido"></span></a>
@@ -183,3 +217,32 @@ print <<HTML;
 </body>
 </html>
 HTML
+}
+
+# FUNZIONE N°2: REDIREZIONE PAGINA ACCOUNT UTENTE
+sub redirect_to_account_page{
+	print "Content-type: text/html\n\n";
+	# codice XHTML della pagina
+print <<HTML;
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="refresh" content="0; url=account.cgi" />
+    <meta content="Autenticazione - Cinema Paradiso" name="title" />
+    <meta content="Alberto Maragno, Alessandro Benetti, Nicola Moretto" name="author" />
+    <meta content="Pagina per l'autenticazione di utenti registrati" name="description" />
+    <meta content="Cinema Paradiso" name="copyright" />
+    <meta content="cinema, paradiso, programmazione, film" name="keyword" />
+    <title>Autenticazione - Cinema Paradiso</title>
+    <link href="/style/screen.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="/style/portable.css" rel="stylesheet" type="text/css" media="handheld, screen and (max-width:480px), only screen and (max-device-width:480px)" />
+    <link href="/style/print.css" rel="stylesheet" type="text/css" media="print" />
+    <script type="text/javascript" src="/script/validation.js"></script>
+    <link rel="shortcut icon" href="/img/cinema.ico" />
+</head>
+<body />
+</html>
+HTML
+}
+

@@ -11,72 +11,90 @@ function validate(input, pattern)
 	return errorCode;
 }
 
+function aggiungiErrore(lista, errore) {
+	var errorMsg = document.createTextNode(errore);
+	var errorItem = document.createElement("li");
+	errorItem.appendChild(errorMsg);
+	lista.appendChild(errorItem);
+}
+
 function checkRegistration() {
 	var input = document.forms["registrazione"];
-	var msg = "Errori riscontrati:\n";
 	var validationError = false;
 	var patternMail = /^[\w\-\+\.]+@[\w\-\+\.]+\.[\w\-\+\.]+$/;
 	var patternUsername = /^\S{3,}$/;
 	var patternPassword = /\S{6,}/;
 	
+	var errorList = document.createElement("ul");
+	errorList.setAttribute("id", "errori");
+	
 	if(input["nome"].value == null || input["nome"].value == "")
 	{
-		msg = msg + "+ Il campo 'Nome' è obbligatorio\n";
+		aggiungiErrore(errorList, "Il campo 'Nome' è obbligatorio");
 		validationError = true;
 	}
 	if(input["cognome"].value == null || input["cognome"].value == "")
 	{
-		msg = msg + "+ Il campo 'Cognome' è obbligatorio\n";
+		aggiungiErrore(errorList, "Il campo 'Cognome' è obbligatorio");
 		validationError = true;
 	}
 	switch( validate(input["email"].value,patternMail) )
 	{
-		case 1: msg = msg + "+ Il campo 'Posta elettronica' è obbligatorio\n"; validationError=true; break;
-		case 2: msg = msg + "+ Il campo 'Posta elettronica' contiene un valore non valido\n"; validationError=true; break;
+		case 1: aggiungiErrore(errorList, "Il campo 'Posta elettronica' è obbligatorio"); validationError=true; break;
+		case 2: aggiungiErrore(errorList, "Il campo 'Posta elettronica' contiene un valore non valido"); validationError=true; break;
 	}
 	
 	switch( validate(input["username"].value,patternUsername) )
 	{
-		case 1: msg = msg + "+ Il campo 'Nome utente' è obbligatorio\n"; validationError=true; break;
-		case 2: msg = msg + "+ Il campo 'Nome utente' deve contenere almeno 3 caratteri (spazi non ammessi)\n"; validationError=true; break;
+		case 1: aggiungiErrore(errorList, "Il campo 'Nome utente' è obbligatorio"); validationError=true; break;
+		case 2: aggiungiErrore(errorList, "Il campo 'Nome utente' deve contenere almeno 3 caratteri (spazi non ammessi)"); validationError=true; break;
 	}
 	switch( validate(input["password"].value,patternPassword) )
 	{
-		case 1: msg = msg + "+ Il campo 'Password' è obbligatorio\n"; validationError=true; break;
-		case 2: msg = msg + "+ Il campo 'Password' deve contenere almeno 6 caratteri (spazi non ammessi)\n"; validationError=true; break;
+		case 1: aggiungiErrore(errorList, "Il campo 'Password' è obbligatorio"); validationError=true; break;
+		case 2: aggiungiErrore(errorList, "Il campo 'Password' deve contenere almeno 6 caratteri (spazi non ammessi)"); validationError=true; break;
 	}
 	switch( validate(input["password_confirm"].value,patternPassword) )
 	{
-		case 1: msg = msg + "+ Il campo 'Conferma password' è obbligatorio\n"; validationError=true; break;
-		case 2: msg = msg + "+ Il campo 'Conferma password' deve contenere almeno 6 caratteri (spazi non ammessi)\n"; validationError=true; break;
+		case 1: aggiungiErrore(errorList, "Il campo 'Conferma password' è obbligatorio"); validationError=true; break;
+		case 2: aggiungiErrore(errorList, "Il campo 'Conferma password' deve contenere almeno 6 caratteri (spazi non ammessi)"); validationError=true; break;
 	}
 	if(input["password"].value != input["password_confirm"].value)
 	{
-		msg = msg + "+ Le password indicate non coincidono!\n";
+		aggiungiErrore(errorList, "Le password indicate non coincidono!")
 		validationError = true;
 	}
-	if(validationError) {alert(msg); return false;}
-	else return true;
+	if(validationError) {
+		var form = document.getElementById("registrazione");
+		(form.parentNode).insertBefore(errorList, form);
+		return false;
+	} else return true;
 }
 
 function checkLogin() {
 	var input = document.forms["login"];
-	var msg = "Errori riscontrati:\n";
 	var validationError = false;
 	var patternUsername = /^\S{3,}$/;
 	var patternPassword = /\S{6,}/;
 	
+	var errorList = document.createElement("ul");
+	errorList.setAttribute("id", "errori");
+	
 	switch( validate(input["username"].value,patternUsername) )
 	{
-		case 1: msg = msg + "+ Il campo 'Nome utente' è obbligatorio\n"; validationError=true; break;
-		case 2: msg = msg + "+ Il campo 'Nome utente' deve contenere almeno 3 caratteri (spazi non ammessi)\n"; validationError=true; break;
+		case 1: aggiungiErrore(errorList, "Il campo 'Nome utente' è obbligatorio"); validationError=true; break;
+		case 2: aggiungiErrore(errorList, "Il campo 'Nome utente' deve contenere almeno 3 caratteri (spazi non ammessi)"); validationError=true; break;
 	}
 	switch( validate(input["password"].value,patternPassword) )
 	{
-		case 1: msg = msg + "+ Il campo 'Password' è obbligatorio\n"; validationError=true; break;
-		case 2: msg = msg + "+ Il campo 'Password' deve contenere almeno 6 caratteri (spazi non ammessi)\n"; validationError=true; break;
+		case 1: aggiungiErrore(errorList, "Il campo 'Password' è obbligatorio"); validationError=true; break;
+		case 2: aggiungiErrore(errorList, "Il campo 'Password' deve contenere almeno 6 caratteri (spazi non ammessi)"); validationError=true; break;
 	}
-	if(validationError) {alert(msg); return false;}
+	if(validationError) {
+		var form = document.getElementById("login");
+		(form.parentNode).insertBefore(errorList, form);
+		return false;
+	}
 	else return true;
 }
 
@@ -87,32 +105,38 @@ function updatePassword() {
 	var patternUsername = /^\S{3,}$/;
 	var patternPassword = /\S{6,}/;
 	
+	var errorList = document.createElement("ul");
+	errorList.setAttribute("id", "errori");
+	
 	switch( validate(input["username"].value,patternUsername) )
 	{
-		case 1: msg = msg + "+ Il campo 'Nome utente' è obbligatorio\n"; validationError=true; break;
-		case 2: msg = msg + "+ Il campo 'Nome utente' deve contenere almeno 3 caratteri (spazi non ammessi)\n"; validationError=true; break;
+		case 1: aggiungiErrore(errorList, "Il campo 'Nome utente' è obbligatorio"); validationError=true; break;
+		case 2: aggiungiErrore(errorList, "Il campo 'Nome utente' deve contenere almeno 3 caratteri (spazi non ammessi)"); validationError=true; break;
 	}
 	switch( validate(input["pwd_corrente"].value,patternPassword) )
 	{
-		case 1: msg = msg + "+ Il campo 'Password attuale' è obbligatorio\n"; validationError=true; break;
-		case 2: msg = msg + "+ Il campo 'Password attuale' deve contenere almeno 6 caratteri (spazi non ammessi)\n"; validationError=true; break;
+		case 1: aggiungiErrore(errorList, "Il campo 'Password attuale' è obbligatorio"); validationError=true; break;
+		case 2: aggiungiErrore(errorList, "Il campo 'Password attuale' deve contenere almeno 6 caratteri (spazi non ammessi)"); validationError=true; break;
 	}
 	switch( validate(input["pwd_nuova"].value,patternPassword) )
 	{
-		case 1: msg = msg + "+ Il campo 'Nuova password' è obbligatorio\n"; validationError=true; break;
-		case 2: msg = msg + "+ Il campo 'Nuova password' deve contenere almeno 6 caratteri (spazi non ammessi)\n"; validationError=true; break;
+		case 1: aggiungiErrore(errorList, "Il campo 'Nuova password' è obbligatorio"); validationError=true; break;
+		case 2: aggiungiErrore(errorList, "Il campo 'Nuova password' deve contenere almeno 6 caratteri (spazi non ammessi)"); validationError=true; break;
 	}
 	switch( validate(input["pwd_nuova_conferma"].value,patternPassword) )
 	{
-		case 1: msg = msg + "+ Il campo 'Conferma nuova password' è obbligatorio\n"; validationError=true; break;
-		case 2: msg = msg + "+ Il campo 'Conferma nuova password' deve contenere almeno 6 caratteri (spazi non ammessi)\n"; validationError=true; break;
+		case 1: aggiungiErrore(errorList, "Il campo 'Conferma nuova password' è obbligatorio"); validationError=true; break;
+		case 2: aggiungiErrore(errorList, "Il campo 'Conferma nuova password' deve contenere almeno 6 caratteri (spazi non ammessi)"); validationError=true; break;
 	}
 	if(input["pwd_nuova"].value != input["pwd_nuova_conferma"].value)
 	{
-		msg = msg + "+ Le nuove password indicate non coincidono!";
+		aggiungiErrore(errorList, "Le nuove password indicate non coincidono!");
 		validationError=true;
 	}
-	if(validationError) {alert(msg); return false;}
-	else return true;
+	if(validationError) {
+		var form = document.getElementById("aggiorna_password");
+		(form.parentNode).insertBefore(errorList, form);
+		return false;
+	} else return true;
 }
 

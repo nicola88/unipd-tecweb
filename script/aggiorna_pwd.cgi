@@ -1,29 +1,123 @@
 #!/usr/bin/perl
 
-######################################################
-# NOME: aggiorna_pwd_conferma.cgi
-######################################################
-# DESCRIZIONE: elabora la richiesta di modifica della
-# password dell'utente corrente
-######################################################
-# QUERY STRING: username, pwd_corrente, pwd_nuova, pwd_nuova_conferma, javascript
-######################################################
+# NOME
+# aggiorna_pwd.cgi
+
+# DESCRIZIONE
+# Elabora la richiesta di modifica della password corrente da parte dell'utente.
+
+# QUERY STRING
+# username, pwd_corrente, pwd_nuova, pwd_nuova_conferma, javascript
+
 use CGI;
 use CGI::Session;
 use XML::LibXML;
 use Digest::MD5 qw(md5_hex);
-print "Content-type: text/html\n\n";
 
-# 1. LETTURA INPUT
-# Lettura valori dei parametri ricevuti dalla form della pagina di aggiornamento
-# della password (username, password corrente e nuova con conferma, javascript)
-my $cgi=new CGI;
-my $username = $cgi->param('username');
-my $pwd_corrente = $cgi->param('pwd_corrente');
-my $pwd_nuova = $cgi->param('pwd_nuova');
-my $pwd_nuova_conferma = $cgi->param('pwd_nuova_conferma');
-my $javascript = $cgi->param('javascript');
+# (1) VERIFICA AUTENTICAZIONE UTENTE
+# Verifico se l'utente è autenticato (in caso contrario, redireziono alla pagina
+# di login).
+$session=CGI::Session->load();
+if($session->is_expired || $session->is_empty){
+	# utente non autenticato
+	print "Location: login.cgi\n\n";
+}
+else{
+	# utente autenticato
+	# (1) LETTURA INPUT FORM
+	# Leggo i valori ricevuti dalla form di aggiornamento della password
+	# (username, password corrente, nuova password, conferma della nuova password
+	# e JavaScript).
+	my $cgi=new CGI;
+	my $username=$cgi->param('username');
+	my $password=$cgi->param('pwd_corrente');
+	my $new_password=$cgi->param('pwd_nuova');
+	my $new_password_confirm=$cgi->param('pwd_nuova_conferma');
+	my $javascript=$cgi->param('javascript');
+	# (2) VALIDAZIONE INPUT (JAVASCRIPT DISABILITATO)
+	# Se JavaScript è disabilitato lato client, valido i valori in input secondo i
+	# seguenti vincoli:
+	# - nessuno dei campo dati deve essere vuoto;
+	# - username e password devono corrispondere a un utente registrato;
+	# - lo username deve contenere almeno 3 caratteri qualsiasi, spazi esclusi;
+	# - tutte le password devono contenere almeno 6 caratteri qualsiasi, spazi
+	#   esclusi.
+	# Se i valori in input non superano la validazione, ristampo la pagina di
+	# aggiornamento della password indicando gli errori riscontrati.
+	my $error;
+	my $correct_input=1;
+	if(defined($javascript)){
+		$error="\t\t<ul>\n";
+		if($username eq ""){
+			$error=$error."\t\t\t<li>Il campo <strong>Nome utente</strong> &egrave; obbligatorio.</li>\n";
+			$correct_input=0;
+		}elsif($username!~/^\S{3,}$/){
+			$error=$error."\t\t\t<li>Il valore immesso nel campo <strong>Nome utente</strong> deve contenere almeno 3 caratteri (spazi non ammessi).</li>\n";
+			$correct_input=0;
+		}
+		if($password eq ""){
+			$error=$error."\t\t\t<li>Il campo <strong>Password attuale</strong> &egrave; obbligatorio.</li>\n";
+			$correct_input=0;
+		}elsif($password!~/^\S{6,}$/){
+			$error=$error."\t\t\t<li>Il valore immesso nel campo <strong>Password attuale</strong> deve contenere almeno 6 caratteri (spazi non ammessi).</li>\n";
+			$correct_input=0;
+		}
+		if($new_password eq ""){
+			$error=$error."\t\t\t<li>Il campo <strong>Nuova password</strong> &egrave; obbligatorio.</li>\n";
+			$correct_input=0;
+		}elsif($new_password!~/^\S{6,}$/){
+			$error=$error."\t\t\t<li>Il valore immesso nel campo <strong>Nuova password</strong> deve contenere almeno 6 caratteri (spazi non ammessi).</li>\n";
+			$correct_input=0;
+		}
+		if($new_password_confirm eq ""){
+			$error=$error."\t\t\t<li>Il campo <strong>Conferma password</strong> &egrave; obbligatorio.</li>\n";
+			$correct_input=0;
+		}elsif($new_password_confirm!~/^\S{6,}$/){
+			$error=$error."\t\t\t<li>Il valore immesso nel campo <strong>Conferma password</strong> deve contenere almeno 6 caratteri (spazi non ammessi).</li>\n";
+			$correct_input=0;
+		}
+		if($new_password ne $new_password_confirm){
+			$error=$error."\t\t\t<li>Le password fornite non coincidono.</li>\n";
+			$correct_input=0;
+		}
+		$error=$error."\t\t</ul>\n";
+		if($correct_input==1){
+			$error=undef; # ripulisco $error
+		}
+	}
+	if($correct_input==1){
+		$password=md5_hex($password);
+		my $parser=XML::LibXML->new();
+		my $document=$parser->parse_file('xml/utenti.xml');
+		my $root=$document->getDocumentElement;
+		@users=$root->findnodes("//utente[username='$username' and password='$password']");
+		if($session->param('username')==$username && $session->param('password')==$password && @users){
+			# (3) AGGIORNAMENTO PASSWORD
+			# Aggiorno la password dell'utente (sia nel file XML sia nella sessione
+			# corrente sul server) e redireziono alla pagina dell'area utente.
+			$new_password=md5_hex($new_password);
+			my @node=$root->findnodes("//utente[username='$username' and password='$password']/password/text()");
+			$node[0]->setData($new_password);
+			open(OUT,">xml/utenti.xml");
+			print OUT $document->toString;
+			close(OUT);
+			$session->param('password',$new_password);
+			&redirect_to_account_page();
+		}
+		else{
+			$error="\t\t\t<p>Username e password utente non corretti.</p>";
+			&print_password_change_page($error);
+		}
+	}
+	else{
+		&print_password_change_page($error);
+	}
+}
 
+# FUNZIONE N°1: STAMPA PAGINA AGGIORNAMENTO PASSWORD
+sub print_password_change_page{
+	print "Content-type: text/html\n\n";
+	# prima parte del codice XHTML della pagina
 print <<HTML;
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
@@ -69,93 +163,22 @@ print <<HTML;
     </div>
     <div id="content">
     	<h1>Cambia password</h1>
-    	<ul>
-    		<li>$username</li>
-    		<li>$pwd_corrente</li>
-    		<li>$pwd_nuova - $pwd_nuova_conferma</li>
-    		<li>$javascript</li>
-    	</ul>
 HTML
-
-# 2. VALIDAZIONE INPUT
-# PRECONDIZIONE: javascript disabilitato lato client
-# Valida i valori dei parametri ricevuti:
-# - nessuno campo deve essere vuoto
-# - username e password devono corrispondere ad un utente esistente
-# - la nuova password deve contenere almeno 6 caratteri qualsiasi (eccetto gli spazi)
-# Se i dati inseriti dall'utente non sono corretti, viene visualizzata nuovamente la
-# pagina corrente con indicati gli errori riscontrati.
-my $msg;
-my $validInput=1;
-if(defined($javascript)) {
-	$msg = "\t\t<ul>\n";
-	if($username eq "") {
-		$msg = $msg . "\t\t\t<li>Il campo <strong>Nome utente</strong> &egrave; obbligatorio.</li>\n";
-		$validInput=0;
-	} elsif ($username!~/^\S{3,}$/) {
-		$msg = $msg . "\t\t\t<li>Il valore immesso nel campo <strong>Nome utente</strong> deve contenere almeno 3 caratteri (spazi non ammessi).</li>\n";
-		$validInput=0;
-	}
-	if($pwd_corrente eq "") {
-		$msg = $msg . "\t\t\t<li>Il campo <strong>Password attuale</strong> &egrave; è obbligatorio.</li>\n";
-		$validInput=0;
-	} elsif($pwd_corrente!~/^\S{6,}$/) {
-		$msg = $msg . "\t\t\t<li>Il valore immesso nel campo <strong>Password attuale</strong> deve contenere almeno 6 caratteri (spazi non ammessi).</li>\n";
-		$validInput=0;
-	}
-	if($pwd_nuova eq "") {
-		$msg = $msg . "\t\t\t<li>Il campo <strong>Nuova password</strong> &egrave; obbligatorio.</li>\n";
-		$validInput=0;
-	} elsif($pwd_nuova!~/^\S{6,}$/) {
-		$msg = $msg . "\t\t\t<li>Il valore immesso nel campo <strong>Nuova password</strong> deve contenere almeno 6 caratteri (spazi non ammessi).</li>\n";
-		$validInput=0;
-	}
-	if($pwd_nuova_conferma eq "") {
-		$msg = $msg . "\t\t\t<li>Il campo <strong>Conferma password</strong> &egrave; obbligatorio.</li>\n";
-		$validInput=0;
-	} elsif($pwd_nuova_conferma!~/^\S{6,}$/) {
-		$msg = $msg . "\t\t\t<li>Il valore immesso nel campo <strong>Conferma password</strong> deve contenere almeno 6 caratteri (spazi non ammessi).</li>\n";
-		$validInput=0;
-	}
-	if($pwd_nuova ne $pwd_nuova_conferma) {
-		$msg = $msg . "\t\t\t<li>Le password fornite non coincidono.</li>\n";
-		$validInput=0;
-	}
-	$msg = "\t\t</ul>\n";
-	if($validInput==0) {print $msg;}
-}
-if($validInput==1) {
-	$pwd_corrente = md5_hex($pwd_corrente);
-	my $parser=XML::LibXML->new();
-	my $document=$parser->parse_file('xml/utenti.xml');
-	my $root=$document->getDocumentElement;
-	@users=$root->findnodes("//utente[username='$username' and password='$pwd_corrente']");
-	print "\t\t\t<p>@users</p>";
-	if(@users) {
-		# 3. AGGIORNAMENTO PASSWORD
-		# PRECONDIZIONE: i valori ricevuti sono stati validati correttamente
-		# Aggiorno la password dell'utente 'username'
-		$pwd_nuova=md5_hex($pwd_nuova);
-		# $user = $users[0];
-	} else {
-		print "\t\t\t<p>Nessun utente registrato corrisponde alle informazioni inserite.</p>";
-		$validInput=0;
-	}
-}
-
-if($validInput==0) {
-print <<FORM;
-    	<form action="/cgi-bin/aggiorna_pwd.cgi" method="get" id="cambia_password">
+	# messaggi di avviso per l'utente
+	print $_[0];
+	# seconda parte del codice XHTML della pagina
+print <<HTML;
+    	<form action="/cgi-bin/aggiorna_pwd.cgi" method="get">
     		<fieldset>
     			<legend>Inserisci la nuova password</legend>
     			<label for="username">Nome utente</label>
-    			<input id="username" name="username" value="$username" />
+    			<input id="username" name="username" />
     			<label for="pwd_corrente">Password attuale:</label>
-    			<input type="password" id="pwd_corrente" name="pwd_corrente" title="Inserisci la password corrente" />
+    			<input type="password" id="pwd_corrente" name="pwd_corrente" />
     			<label for="pwd_nuova">Nuova password:</label>
-    			<input type="password" id="pwd_nuova" title="Inserisci la nuova password" />
+    			<input type="password" id="pwd_nuova" name="pwd_nuova" />
     			<label for="pwd_nuova_conferma">Conferma nuova password:</label>
-    			<input type="password" id="pwd_nuova_conferma" title="Ripeti la nuova password per conferma" />
+    			<input type="password" id="pwd_nuova_conferma" name="pwd_nuova_conferma" />
     			<input type="submit" value="Aggiorna password" />
     		</fieldset>
     		<noscript>
@@ -164,10 +187,6 @@ print <<FORM;
 			</fieldset>
 			</noscript>
     	</form>
-FORM
-}
-
-print <<HTML;
     </div>
     <div id="footer">
     	<a href="http://validator.w3.org/check?uri=referer"><span id="xhtml_valid" title="HTML 1.0 Strict valido"></span></a>
@@ -177,4 +196,32 @@ print <<HTML;
 </body>
 </html>
 HTML
+}
+
+# FUNZIONE N°2: REDIREZIONE PAGINA ACCOUNT UTENTE
+sub redirect_to_account_page{
+	print "Content-type: text/html\n\n";
+	# codice XHTML della pagina
+print <<HTML;
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="refresh" content="0; url=account.cgi" />
+    <meta content="Autenticazione - Cinema Paradiso" name="title" />
+    <meta content="Alberto Maragno, Alessandro Benetti, Nicola Moretto" name="author" />
+    <meta content="Pagina per l'autenticazione di utenti registrati" name="description" />
+    <meta content="Cinema Paradiso" name="copyright" />
+    <meta content="cinema, paradiso, programmazione, film" name="keyword" />
+    <title>Autenticazione - Cinema Paradiso</title>
+    <link href="/style/screen.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="/style/portable.css" rel="stylesheet" type="text/css" media="handheld, screen and (max-width:480px), only screen and (max-device-width:480px)" />
+    <link href="/style/print.css" rel="stylesheet" type="text/css" media="print" />
+    <script type="text/javascript" src="/script/validation.js"></script>
+    <link rel="shortcut icon" href="/img/cinema.ico" />
+</head>
+<body />
+</html>
+HTML
+}
 

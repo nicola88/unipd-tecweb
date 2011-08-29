@@ -1,42 +1,41 @@
 #!/usr/bin/perl
 
-######################################################
-# NOME: account.cgi
-######################################################
-# DESCRIZIONE: visualizza e informazioni sul profilo
-# e le prenotazioni associate all'utente corrente
-######################################################
-# QUERY STRING: vuota
-######################################################
-# TO DO: tabella prenotazioni
-######################################################
+# NOME
+# account.cgi
+
+# DESCRIZIONE
+# Visualizza le informazioni del profilo e le prenotazioni dell'utente corrente.
+
+# QUERY STRING
+# vuota
 
 use CGI;
 use CGI::Session;
 use XML::LibXML;
-print "Content-type: text/html\n\n";
 
-# 1. GESTIONE SESSIONE
-#my $session = CGI::Session->load() or die "Nessuna sessione aperta.";
-#if($session->is_empty() || $session->is_expired()){
-#	# non esiste una sessione attiva
-#	print "Location: /cgi-bin/404.cgi\n\n";
-#}
-my $username='nmoretto'; # $session->param('username');
-my $password='d0ef51379636616a1e351fa3bec115e6'; # $session->param('password'); # hash MD5!
-
-# 2. LETTURA INFORMAZIONI UTENTE da XML
-# PRECONDIZIONI: recuperate con successo le informazioni (username, password) della sessione corrente
-# Cerco nel file utenti.xml un elemento 'utente' con
-# username e password corrispondenti ai valori della sessione
-my $parser=XML::LibXML->new();
-my $document=$parser->parse_file('xml/utenti.xml');
-my $root=$document->getDocumentElement;
-my @users=$root->findnodes("//utente[username='$username' and password='$password']");
-my $nome=$users[0]->getElementsByTagName('nome');
-my $cognome=$users[0]->getElementsByTagName('cognome');
-my $email=$users[0]->getElementsByTagName('email');
-
+# (1) VERIFICA AUTENTICAZIONE UTENTE
+# Verifico se l'utente è autenticato (in caso contrario, redireziono alla pagina
+# di login).
+$session=CGI::Session->load();
+if($session->is_expired || $session->is_empty){
+	# utente non autenticato
+	print "Location: login.cgi\n\n";
+}
+else{
+	# utente autenticato
+	# (2) RECUPERO INFORMAZIONI UTENTE
+	# Recupero e visualizzo le informazioni personali e le prenotazioni
+	#  dell'utente.
+	my $username=$session->param('username');
+	my $password=$session->param('password');
+	my $parser=XML::LibXML->new();
+	my $document=$parser->parse_file('xml/utenti.xml');
+	my $root=$document->getDocumentElement;
+	my @users=$root->findnodes("//utente[username='$username' and password='$password']");
+	my $name=$users[0]->getElementsByTagName('nome');
+	my $surname=$users[0]->getElementsByTagName('cognome');
+	my $email=$users[0]->getElementsByTagName('email');
+	print "Content-type: text/html\n\n";
 print <<HTML;
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it"> 
@@ -77,39 +76,34 @@ print <<HTML;
     	<p>Sei in: Area riservata</p> 
     </div> 
     <div id="content">
+    	<h1>Il tuo account</h1>
 	    <ul id="indice">
 	    	<li><a href="#profilo">Dettagli profilo</a></li>
 	    	<li><a href="#prenotazioni">Prenotazioni</a></li>
 	    </ul>
-	    <h3 id="profilo">Dettagli del profilo</h3>
+	    <h2 id="profilo">Dettagli del profilo</h2>
     	<dl>
     		<dt>Nome</dt>
-    		<dd>$nome</dd>
+    		<dd>$name</dd>
     		<dt>Cognome</dt>
-    		<dd>$cognome</dd>
+    		<dd>$surname</dd>
     		<dt>Nome utente</dt>
     		<dd>$username</dd>
     		<dt>Indirizzo di posta elettronica:</dt>
     		<dd>$email</dd>    			
     	</dl>
-    	<p>
+    	<p class="link">
 	    	<a href="/aggiorna_pwd.html" title="Cambia la password">Cambia password</a>
 	    </p>
-	    <h3 id="prenotazioni">Prenotazioni</h3>
+	    <h2 id="prenotazioni">Prenotazioni</h2>
 HTML
-
-# 3. SEZIONE PRENOTAZIONI
-# Inserisce nella pagina web le prenotazioni associate all'utente corrente
-# - nessuna prenotazione: viene stampata la stringa 'Nessuna prenotazione effettuata';
-# - 1+ prenotazioni: viene creata una tabella a tre colonne (film, spettacolo, posti prenotati)
-# con la lista delle prenotazioni
-my $user = $users[0];
-my @prenotazioni = $user->getElementsByTagName('prenotazione');
-if(!@prenotazioni) {
-	print "\t\<p>Nessuna prenotazione effettuata.</p>";
-} else {
+	# NOTA IMPORTANTE: se non è associata alcuna prenotazione all'utente, è
+	# visualizzata la stringa 'Nessuna prenotazione effettuata.', altrimenti è
+	# visualizzata una tabella a tre colonne (film, spettacolo, posti prenotati)
+	# contenente le prenotazioni.
+	my @bookings=$root->findnodes("//utente[username='$username' and password='$password']/prenotazioni/prenotazione");
+	if(@bookings){
 print <<HTML;
-		<p>$user - @prenotazioni</p>
 	    <table summary="" title="Prenotazioni">
 	    	<caption>Elenco delle prenotazioni effettuate</caption>
 	    	<thead>
@@ -128,29 +122,29 @@ print <<HTML;
 	    	</tfoot>
 	    	<tbody>
 HTML
-	foreach $prenotazione (@prenotazioni) {
-		my $id_spettacolo = $prenotazione->getChildrenByTagName('spettacolo');
-		my $posti = $prenotazione->getChildrenByTagName('posti');
-		
-		my $parser=XML::LibXML->new();
-		my $document=$parser->parse_file('xml/film.xml');
-		my $root=$document->getDocumentElement;
-		my @spettacolo=$root->findnodes("//spettacolo[\@id='$id_spettacolo']");
-		my $data = $spettacolo[0]->getChildrenByTagName('data');
-		my $ora = $spettacolo[0]->getChildrenByTagName('ora');
-		my $film = ($spettacolo[0]->parentNode())->parentNode();
-		my $titolo = $film->getChildrenByTagName('titolo');
+		$document=$parser->parse_file('xml/film.xml');
+		$root=$document->getDocumentElement;
+		for($i=0;$i<=$#bookings;$i++){
+			my $id=$bookings[i]->getElementsByTagName('spettacolo');
+			my $seats=$bookings[i]->getElementsByTagName('posti');
+			my @show=$root->findnodes("//spettacolo[\@id='$id']");
+			my $date=$show[0]->getElementsByTagName('data');
+			my $time=$show[0]->getElementsByTagName('ora');
+			my $film=($show[0]->parentNode())->parentNode();
+			my $title=$film->getElementsByTagName('titolo');
 print <<HTML;
 				<tr>
-					<td>$titolo</td>
-					<td>$data $ora</td>
-					<td>$posti</td>
+					<td>$title</td>
+					<td>$date $time</td>
+					<td>$seats</td>
 				</tr>
 HTML
+		}
+		print "\t\t</tbody>\n\t</table>\n";
 	}
-print "\t\t</tbody>\n\t</table>\n";
-}
-
+	else{
+		print "\t\t<p>Nessuna prenotazione effettuata.</p>";
+	}
 print <<HTML;
     </div> 
     <div id="footer"> 
@@ -161,3 +155,5 @@ print <<HTML;
 </body> 
 </html>
 HTML
+}
+
