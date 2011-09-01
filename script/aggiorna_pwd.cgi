@@ -187,6 +187,9 @@ print <<HTML;
 			</fieldset>
 			</noscript>
     	</form>
+    	<p class="aiuto">
+    		La nuova password deve contenere almeno 6 caratteri (spazi non ammessi).
+    	</p>
     </div>
     <div id="footer">
     	<a href="http://validator.w3.org/check?uri=referer"><span id="xhtml_valid" title="HTML 1.0 Strict valido"></span></a>

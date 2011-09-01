@@ -12,6 +12,7 @@
 use CGI;
 use CGI::Session;
 use XML::LibXML;
+use HTML::Entities;
 
 # (1) VERIFICA AUTENTICAZIONE UTENTE
 # Verifico se l'utente è autenticato (in caso contrario, redireziono alla pagina
@@ -35,6 +36,10 @@ else{
 	my $name=$users[0]->getElementsByTagName('nome');
 	my $surname=$users[0]->getElementsByTagName('cognome');
 	my $email=$users[0]->getElementsByTagName('email');
+	$name=encode_entities($name);
+	$surname=encode_entities($surname);
+	$username=encode_entities($username);
+	$email=encode_entities($email);
 	print "Content-type: text/html\n\n";
 print <<HTML;
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
@@ -125,13 +130,17 @@ HTML
 		$document=$parser->parse_file('xml/film.xml');
 		$root=$document->getDocumentElement;
 		for($i=0;$i<=$#bookings;$i++){
-			my $id=$bookings[i]->getElementsByTagName('spettacolo');
-			my $seats=$bookings[i]->getElementsByTagName('posti');
+			my $id=$bookings[$i]->getElementsByTagName('spettacolo');
+			my $seats=$bookings[$i]->getElementsByTagName('posti');
 			my @show=$root->findnodes("//spettacolo[\@id='$id']");
 			my $date=$show[0]->getElementsByTagName('data');
 			my $time=$show[0]->getElementsByTagName('ora');
 			my $film=($show[0]->parentNode())->parentNode();
 			my $title=$film->getElementsByTagName('titolo');
+			$title=encode_entities($title);
+			$date=encode_entities($date);
+			$time=encode_entities($time);
+			$seats=encode_entities($seats);
 print <<HTML;
 				<tr>
 					<td>$title</td>

@@ -49,30 +49,30 @@
     		<thead>
     			<tr>
     				<th></th>
-    				<th>5 giugno</th>
-    				<th>6 giugno</th>
-    				<th>7 giugno</th>
+    				<th scope="col" id="5-giugno">5 giugno</th>
+    				<th scope="col" id="6-giugno">6 giugno</th>
+    				<th scope="col" id="7-giugno">7 giugno</th>
     			</tr>
     		</thead>
     		<tfoot>
     			<tr>
     				<th></th>
-    				<th>5 giugno</th>
-    				<th>6 giugno</th>
-    				<th>7 giugno</th>
+    				<th scope="col" id="5-giugno">5 giugno</th>
+    				<th scope="col" id="6-giugno">6 giugno</th>
+    				<th scope="col" id="7-giugno">7 giugno</th>
     			</tr>
     		</tfoot>
     		<tbody>
     			<tr>
-    				<td class="film">Il Padrino</td>
-    				<td colspan="2">
+    				<td class="film" scope="row" id="padrino" >Il Padrino</td>
+    				<td colspan="2" headers="padrino 5-giugno 6-giugno">
 	    				<ul>
 		        			<li>09:30</li>
 		        			<li>12:00</li>
 		        			<li>16:30</li>
 	        			</ul>
         			</td>
-        			<td>
+        			<td headers="padrino 7-giugno">
         				<ul>
 		        			<li>11:00</li>
 		        			<li>15:00</li>
@@ -81,15 +81,15 @@
         			</td>
     			</tr>
     			<tr class="pari">
-    				<td class="film">Casino Royale</td>
-    				<td colspan="2">
+    				<td class="film" scope="row" id="casino-royale">Casino Royale</td>
+    				<td colspan="2" headers="casino-royale 5-giugno 6-giugno">
 	    				<ul>
 		        			<li>11:00</li>
 		        			<li>14:00</li>
 		        			<li>17:00</li>
 		        		</ul>
     				</td>
-    				<td>
+    				<td headers="casino-royale 7-giugno">
    						<ul>
 		        			<li>10:30</li>
 		        			<li>14:30</li>

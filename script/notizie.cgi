@@ -9,6 +9,7 @@
 ######################################################
 use CGI;
 use Encode;
+use HTML::Entities;
 use XML::LibXML;
 print "Content-type: text/html\n\n";
 
@@ -76,7 +77,9 @@ print "\t\t<h2 id=\"uscite\">Film e programmazione</h2>\n";
 		foreach $notizia (@notizie_film) {
 			my $data = $notizia->getChildrenByTagName('data');
 			my $titolo = $notizia->getChildrenByTagName('titolo');
+			$titolo = encode_entities($titolo);
 			my $descrizione = encode("utf-8",$notizia->getChildrenByTagName('descrizione'));
+			$descrizione = encode_entities($descrizione);
 print <<HTML;
 		<div class="notizia">
 			<h3><span class="data">$data</span> - $titolo</h3>
@@ -95,7 +98,9 @@ print "\t\t<h2 id=\"eventi\">Eventi</h2>\n";
 		foreach $notizia (@notizie_eventi) {
 			my $data = $notizia->getChildrenByTagName('data');
 			my $titolo = $notizia->getChildrenByTagName('titolo');
+			$titolo = encode_entities($titolo);
 			my $descrizione = $notizia->getChildrenByTagName('descrizione');
+			$descrizione = encode_entities($descrizione);
 print <<HTML;
 		<div class="notizia">
 			<h3><span class="data">$data</span> - $titolo/h3>
@@ -114,7 +119,9 @@ print "\t\t<h2 id=\"avvisi\">Avvisi generali</h2>\n";
 		foreach $notizia (@notizie_avvisi) {
 			my $data = $notizia->getChildrenByTagName('data');
 			my $titolo = $notizia->getChildrenByTagName('titolo');
+			$titolo = encode_entities($titolo);
 			my $descrizione = $notizia->getChildrenByTagName('descrizione');
+			$descrizione = encode_entities($descrizione);
 print <<HTML;
 		<div class="notizia">
 			<h3><span class="data">$data</span> - $titolo</h3>

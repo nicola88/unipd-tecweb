@@ -100,28 +100,37 @@ else{
 		}
 	}
 	if($correct_input==1){
-		# (3) REGISTRAZIONE NUOVO UTENTE
-		# Memorizzo le informazioni del nuovo utente, inizializzo una sessione sul
-		# server e redireziono alla pagina dell'area utente.
-		my $password=md5_hex($password);
+		# (3) CONTROLLO USERNAME E REGISTRAZIONE NUOVO UTENTE
+		# Se lo username è già utilizzato da un utente registrato, ristampo la
+		# pagina di registrazione segnalando l'errore, altrimenti memorizzo le
+		# informazioni del nuovo utente, inizializzo una sessione sul server e
+		# redireziono alla pagina dell'area utente.
 		my $parser=XML::LibXML->new();
 		my $document=$parser->parse_file('xml/utenti.xml');
 		my $root=$document->getDocumentElement;
-		my @users=$root->findnodes("//utenti");
-		my $new_user="\t<utente>\n\t\t<nome>$name</nome>\n\t\t<cognome>$surname</cognome>\n\t\t<email>$email</email>\n\t\t<username>$username</username>\n\t\t<password>$password</password>\n\t\t<prenotazioni />\n\t</utente>\n";
-		my $fragment=$parser->parse_balanced_chunk($new_user);
-		$users[0]->appendChild($fragment); # $users[0] è il nodo 'utenti' (non il primo figlio 'utente' del nodo 'utenti')
-		open(OUT,">xml/utenti.xml");
-		print OUT $document->toString;
-		close(OUT);
-		my $session=CGI::Session->new();
-		my $cookie=$cgi->cookie(-name=>$session->name,
-		                        -value=>$session->id);
-		print $cgi->header(-cookie=>$cookie);
-		$session->param('username',$username);
-		$session->param('password',$password);
-		$session->expire('+20m'); # scadenza della sessione = 20 minuti
-		&redirect_to_account_page();
+		my @registered_users=$root->findnodes("//utente[username='$username']");
+		if(@registered_users){
+			$error="\t\t\t<p>Username gi&agrave; in uso.</p>";
+			&print_registration_page($error,$name,$surname,$email,$username);
+		}
+		else{
+			my $password=md5_hex($password);
+			my @users=$root->findnodes("//utenti");
+			my $new_user="\t<utente>\n\t\t<nome>$name</nome>\n\t\t<cognome>$surname</cognome>\n\t\t<email>$email</email>\n\t\t<username>$username</username>\n\t\t<password>$password</password>\n\t\t<prenotazioni />\n\t</utente>\n";
+			my $fragment=$parser->parse_balanced_chunk($new_user);
+			$users[0]->appendChild($fragment); # $users[0] è il nodo 'utenti' (non il primo figlio 'utente' del nodo 'utenti')
+			open(OUT,">xml/utenti.xml");
+			print OUT $document->toString;
+			close(OUT);
+			my $session=CGI::Session->new();
+			my $cookie=$cgi->cookie(-name=>$session->name,
+			                        -value=>$session->id);
+			print $cgi->header(-cookie=>$cookie);
+			$session->param('username',$username);
+			$session->param('password',$password);
+			$session->expire('+20m'); # scadenza della sessione = 20 minuti
+			&redirect_to_account_page();
+		}
 	}
 	else{
 		&print_registration_page($error,$name,$surname,$email,$username);
@@ -208,6 +217,10 @@ print <<HTML;
 			</fieldset>
 			</noscript>
 		</form>
+		<p class="aiuto">
+			Il nome utente e la password devono contenere rispettivamente almeno 3 e 6 caratteri (spazi non ammessi).
+			L'indirizzo di posta elettronica dev'essere del tipo <em>utente@example.org</em>.
+		</p>
     </div>
     <div id="footer">
     	<a href="http://validator.w3.org/check?uri=referer"><span id="xhtml_valid" title="HTML 1.0 Strict valido"></span></a>

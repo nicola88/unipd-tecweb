@@ -11,6 +11,7 @@
 # TO DO: conversione in intero del numero di posti letto da XML
 ######################################################
 
+use HTML::Entities;
 use XML::LibXML; # se usate XML
 use CGI;
 print "Content-type: text/html\n\n";
@@ -81,7 +82,9 @@ if(@spettacolo) {
 	# Titolo film
 	my $film = ($spettacolo[0]->parentNode())->parentNode();
 	my $titolo = $film->getChildrenByTagName('titolo');
+	$titolo = encode_entities($titolo);
 	my $maxPrenotazioni = 15; # Numero massimo di prenotazioni individuali
+	$posti = int($posti);
 	if($posti < $maxPrenotazioni) {$maxPrenotazioni = $posti;}
 print <<HTML;
         <dl>
@@ -101,7 +104,7 @@ print <<HTML;
                 <label for="posti">Posti da prenotare</label>
                 <select id="posti" name="posti">
 HTML
-	for($count=1; $count <= $posti; $count++) {
+	for($count=1; $count <= $maxPrenotazioni; $count++) {
 	    print "\t\t\t\t<option>$count</option>\n";
 	}
 print <<HTML;
