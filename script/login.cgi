@@ -119,37 +119,37 @@ print <<HTML;
     <meta content="Cinema Paradiso" name="copyright" />
     <meta content="cinema, paradiso, programmazione, film" name="keyword" />
     <title>Autenticazione - Cinema Paradiso</title>
-    <link href="style/screen.css" rel="stylesheet" type="text/css" media="screen" />
-    <link href="style/portable.css" rel="stylesheet" type="text/css" media="handheld, screen and (max-width:480px), only screen and (max-device-width:480px)" />
-    <link href="style/print.css" rel="stylesheet" type="text/css" media="print" />
-    <script type="text/javascript" src="/script/validation.js"></script>
-    <link rel="shortcut icon" href="img/cinema.ico" />
+    <link href="../style/screen.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../style/portable.css" rel="stylesheet" type="text/css" media="handheld, screen and (max-width:480px), only screen and (max-device-width:480px)" />
+    <link href="../style/print.css" rel="stylesheet" type="text/css" media="print" />
+    <script type="text/javascript" src="../script/validation.js"></script>
+    <link rel="shortcut icon" href="../img/cinema.ico" />
 </head>
 <body>
 	<p><a id="skip_nav" href="#content" title="Vai al contenuto" >Vai al contenuto</a></p>
     <div id="header">
-    	<h1><a href="default.html" title="Pagina iniziale">Cinema Paradiso</a></h1>
+    	<h1><a href="../default.html" title="Pagina iniziale">Cinema Paradiso</a></h1>
     	<h2>Programmazione e prenotazioni online</h2>
     </div>
     <div id="account">
-    	<p><a href="../cgi-bin/account.cgi" accesskey="8" title="Area riservata">Area riservata</a> | <a href="registrazione.html" accesskey="9" title="Registrazione">Registrati</a></p>
+    	<p><a href="account.cgi" accesskey="8" title="Area riservata">Area riservata</a> | <a href="../registrazione.html" accesskey="9" title="Registrazione">Registrati</a></p>
     </div>
     <div id="navigation">
     	<ul>
-        	<li><a href="default.html" accesskey="0">Pagina iniziale</a>
+        	<li><a href="../default.html" accesskey="0">Pagina iniziale</a>
         	</li>
-            <li><a href="film.html" accesskey="1">Film</a>
+            <li><a href="../film.html" accesskey="1">Film</a>
             </li>
-            <li><a href="programmazione.html" accesskey="2">Programmazione</a>
+            <li><a href="../programmazione.html" accesskey="2">Programmazione</a>
             </li>
-            <li><a href="informazioni.html" accesskey="3">Informazioni</a>
+            <li><a href="../informazioni.html" accesskey="3">Informazioni</a>
             </li>
-            <li><a href="../cgi-bin/notizie.cgi" accesskey="4">Notizie</a>
+            <li><a href="notizie.cgi" accesskey="4">Notizie</a>
             </li>
         </ul>
     </div>
     <div id="path">
-    	<p>Sei in: <a href="default.html" title="">Pagina iniziale</a> &#187; Autenticazione</p>
+    	<p>Sei in: <a href="../default.html" title="">Pagina iniziale</a> &#187; Autenticazione</p>
     </div>
     <div id="content">
         <h1>Autenticazione</h1>
@@ -160,7 +160,7 @@ HTML
 	}
 	# seconda parte del codice XHTML della pagina
 print <<HTML;
-		<form action="/cgi-bin/login.cgi" method="get" id="login">
+		<form action="login.cgi" method="post" id="login">
 			<fieldset>
 				<legend>Inserisci le tue credenziali</legend>
 				<label for="username">Nome utente</label>
@@ -176,7 +176,7 @@ print <<HTML;
 			</noscript>
 		</form>
 		<p>
-			<a href="registrazione.html" title="Registrazione">Non hai un account? Registrati, &egrave; gratis!</a>
+			<a href="../registrazione.html" title="Registrazione">Non hai un account? Registrati, &egrave; gratis!</a>
 		</p>
     </div>
     <div id="footer">
@@ -205,11 +205,11 @@ print <<HTML;
     <meta content="Cinema Paradiso" name="copyright" />
     <meta content="cinema, paradiso, programmazione, film" name="keyword" />
     <title>Autenticazione - Cinema Paradiso</title>
-    <link href="style/screen.css" rel="stylesheet" type="text/css" media="screen" />
-    <link href="style/portable.css" rel="stylesheet" type="text/css" media="handheld, screen and (max-width:480px), only screen and (max-device-width:480px)" />
-    <link href="style/print.css" rel="stylesheet" type="text/css" media="print" />
-    <script type="text/javascript" src="/script/validation.js"></script>
-    <link rel="shortcut icon" href="img/cinema.ico" />
+    <link href="../style/screen.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../style/portable.css" rel="stylesheet" type="text/css" media="handheld, screen and (max-width:480px), only screen and (max-device-width:480px)" />
+    <link href="../style/print.css" rel="stylesheet" type="text/css" media="print" />
+    <script type="text/javascript" src="../script/validation.js"></script>
+    <link rel="shortcut icon" href="../img/cinema.ico" />
 </head>
 <body />
 </html>
