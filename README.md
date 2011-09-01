@@ -19,14 +19,14 @@ Viene riportata di seguito la struttura gerarchica del sito web: per ciascuna pa
     - Film (film.html)
         - Scheda film (scheda.cgi)
             - Spettacolo (spettacolo.cgi)
-	            - Prenotazione biglietti (prenotazione.cgi + prenotazione_conferma.cgi)
+	            - Prenotazione biglietti (prenotazione.cgi)
     - Programmazione (programmazione.html)
     - Informazioni (informazioni.html)
     - Notizie (notizie.cgi)    
     - Area utente (account.cgi)
-        - Cambia password (aggiorna_pwd.html + aggiorna_pwd_conferma.cgi)
+        - Cambia password (aggiorna_pwd.html + aggiorna_pwd.cgi)
 - Login (login.cgi)
-- Registrazione (registrazione.html | registrazione_nos.html) + (registrazione_conferma)
+- Registrazione (registrazione.html + registrazione.cgi)
 
 Documentazione (doc)
 --------------------

@@ -19,6 +19,8 @@ function aggiungiErrore(lista, errore) {
 }
 
 function checkRegistration() {
+	var errori = document.getElementById("errori");
+	if(errori) {document.removeChild(errori);}
 	var input = document.forms["registrazione"];
 	var validationError = false;
 	var patternMail = /^[\w\-\+\.]+@[\w\-\+\.]+\.[\w\-\+\.]+$/;
@@ -41,7 +43,7 @@ function checkRegistration() {
 	switch( validate(input["email"].value,patternMail) )
 	{
 		case 1: aggiungiErrore(errorList, "Il campo 'Posta elettronica' è obbligatorio"); validationError=true; break;
-		case 2: aggiungiErrore(errorList, "Il campo 'Posta elettronica' contiene un valore non valido"); validationError=true; break;
+		case 2: aggiungiErrore(errorList, "Il campo 'Posta elettronica' contiene un indirizzo di posta elettronica non valido"); validationError=true; break;
 	}
 	
 	switch( validate(input["username"].value,patternUsername) )
@@ -61,7 +63,7 @@ function checkRegistration() {
 	}
 	if(input["password"].value != input["password_confirm"].value)
 	{
-		aggiungiErrore(errorList, "Le password indicate non coincidono!")
+		aggiungiErrore(errorList, "Le password indicate non coincidono!");
 		validationError = true;
 	}
 	if(validationError) {
@@ -101,7 +103,6 @@ function checkLogin() {
 function updatePassword() {
 	var input = document.forms["aggiorna_password"];
 	var validationError = false;
-	var msg = "Errori riscontrati:\n";
 	var patternUsername = /^\S{3,}$/;
 	var patternPassword = /\S{6,}/;
 	
