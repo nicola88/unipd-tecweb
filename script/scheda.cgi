@@ -11,6 +11,7 @@
 ######################################################
 use CGI;
 use CGI::Session;
+use HTML::Entities;
 use XML::LibXML;
 print "Content-type: text/html\n\n";
 
@@ -84,10 +85,15 @@ if(@lista) {
 	my $regista = $film->getChildrenByTagName('regista');
 	my $anno = $film->getChildrenByTagName('anno');
 	my $tagline = $film->getChildrenByTagName('tagline');
-	my $locandina = "http://placehold.it/160x240"; # Nome locandina = <id_film>
+	my $locandina = "/img/" . $id . ".jpg"; # Nome locandina = <id_film>
 	my $trama = $film->getChildrenByTagName('trama');
+	$titolo = encode_entities($titolo);
+	$tagline = encode_entities($tagline);
+	$trama = encode_entities($trama);
+	$regista = encode_entities($regista);
+	$nazione = encode_entities($nazione);
 print <<HTML;
-        <h1>$titolo ($anno)</h1>
+        <h1>$titolo</h1>
         <blockquote id="tagline"><p>
              $tagline
         </p></blockquote>
@@ -97,18 +103,26 @@ print <<HTML;
             <dd>$titolo</dd>
             <dt>Genere:</dt>
 HTML
-	foreach $value (@genere) {$value=$value->textContent(); print "\t\t\t\t<dd>$value</dd>\n";}
-print <<HTML;			
+	print "\t\t\t\t<dd>";
+	$lista_generi = "";
+	foreach $value (@genere) {$value=$value->textContent(); $value = encode_entities($value); $lista_generi = $lista_attori . "$value, ";}
+	$lista_generi = substr($lista_generi,0,-2);
+	print "$lista_generi</dd>\n";
+print <<HTML;		
 			<dt>Regista:</dt>
             <dd>$regista</dd>
             <dt>Attori:</dt>
 HTML
-	foreach $attore (@attori) {$value=$attore->textContent(); print "\t\t\t\t<dd>$value</dd>\n";}
+	print "\t\t\t\t<dd>";
+	$lista_attori = "";
+	foreach $attore (@attori) {$value=$attore->textContent(); $value = encode_entities($value); $lista_attori = $lista_attori . "$value, ";}
+	$lista_attori = substr($lista_attori,0,-2);
+	print "$lista_attori</dd>\n";
 print <<HTML;
-			<dt>Nazionalità (anno):</dt>
+			<dt>Nazionalità (Anno):</dt>
             <dd>$nazione ($anno)</dd>
             <dt>Durata:</dt>
-            <dd>$durata</dd>
+            <dd>$durata minuti</dd>
         </dl>
         <p class="link">
             <a href="/programmazione.html">Orario spettacoli</a>

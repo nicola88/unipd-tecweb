@@ -21,6 +21,30 @@
 		<password>61fa153f2827c887a48a351ae3c6cfd3</password> <!-- debugger -->
 		<prenotazioni/>
 	</utente>
+	<utente>
+		<nome>Gino</nome>
+		<cognome>Rua</cognome>
+		<email>gino.rua@hotmail.it</email>
+		<username>trombettiere</username>
+		<password>02addbcb4716a805f94d420475201275</password> <!-- trombetta -->
+		<prenotazioni/>
+	</utente>
+	<utente>
+		<nome>Gilberto</nome>
+		<cognome>Filè</cognome>
+		<email>gilberto@math.unipd.it</email>
+		<username>gilberto</username>
+		<password>bafff1df7d916f99fbe8be1a81dc326f</password> <!-- gilberto -->
+		<prenotazioni/>
+	</utente>
+	<utente>
+		<nome>Ombretta</nome>
+		<cognome>Gaggi</cognome>
+		<email>gaggi@math.unipd.it</email>
+		<username>gaggi</username>
+		<password>ee35bdf95009d03f195f951bdabdd1a5</password> <!-- tecweb1 -->
+		<prenotazioni/>
+	</utente>
 </utenti>
 <!--
 xmlns="http://progetto-tecweb/utenti"
