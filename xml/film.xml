@@ -62,12 +62,12 @@
 				<ora>11:00:00</ora>
 				<posti>75</posti>
 			</spettacolo>
-			<spettacolo>
+			<spettacolo id="godf8">
 				<data>2011-06-07</data>
 				<ora>15:00:00</ora>
 				<posti>150</posti>
 			</spettacolo>
-			<spettacolo>
+			<spettacolo id="godf9">
 				<data>2011-06-07</data>
 				<ora>20:30:00</ora>
 				<posti>150</posti>

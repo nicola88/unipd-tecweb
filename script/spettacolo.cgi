@@ -72,7 +72,7 @@ print <<HTML;
         </ul>
     </div>
     <div id="path">
-        <p>Sei in: <a href="../default.html" title="">Pagina iniziale</a> &#187; Dettagli spettacolo</p>
+        <p>Sei in: <a href="../default.html"">Pagina iniziale</a> &#187; <a href="../programmazione.html">Programmazione</a> &#187; Dettagli spettacolo</p>
     </div>
     <div id="content">
         <h1>Dettagli spettacolo</h1>
@@ -81,28 +81,29 @@ HTML
 if(@spettacolo) {
 	# Informazioni spettacolo
 	my $data = $spettacolo[0]->getChildrenByTagName('data');
+	$data = &date_format_conversion($data);
 	my $ora = $spettacolo[0]->getChildrenByTagName('ora');
+	$ora = substr($ora,0,-3);
 	my $posti = $spettacolo[0]->getChildrenByTagName('posti');
-	# Titolo film
 	my $film = ($spettacolo[0]->parentNode())->parentNode();
 	my $titolo = $film->getChildrenByTagName('titolo');
 	$titolo = encode_entities($titolo);
-	my $maxPrenotazioni = 15; # Numero massimo di prenotazioni individuali
+	my $maxPrenotazioni = 5; # Numero massimo di prenotazioni individuali
 	$posti = int($posti);
 	if($posti < $maxPrenotazioni) {$maxPrenotazioni = $posti;}
 print <<HTML;
-        <dl>
-            <dt>Film</dt>
+        <dl class="spettacolo">
+            <dt>Film:</dt>
             <dd>$titolo</dd>
-            <dt>Giorno</dt>
+            <dt>Data:</dt>
             <dd>$data</dd>
-            <dt>Ora</dt>
+            <dt>Ora:</dt>
             <dd>$ora</dd>
-            <dt>Posti disponibili</dt>
+            <dt>Posti disponibili:</dt>
             <dd>$posti</dd>
         </dl>
         <h2 id="prenotazione">Informazioni prenotazione</h2>
-        <form action="" method="post">
+        <form action="prenotazione.cgi" method="post">
             <fieldset>
                 <legend>Seleziona il numero di biglietti</legend>
                 <label for="posti">Posti da prenotare</label>
@@ -131,3 +132,9 @@ print <<HTML;
 </body>
 </html>
 HTML
+
+sub date_format_conversion{
+	my $xml_data = $_[0];
+	my $data = substr($xml_data,8,2) . "-" . substr($xml_data,5,2) . "-" . substr($xml_data,0,4);
+	return $data;
+}
