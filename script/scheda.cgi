@@ -125,7 +125,7 @@ print <<HTML;
             <dd>$durata minuti</dd>
         </dl>
         <p class="link">
-            <a href="programmazione.html">Orario spettacoli</a>
+            <a href="../programmazione.html">Orario spettacoli</a>
         </p>
         <h2>Descrizione</h2>
         <p>$trama

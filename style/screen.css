@@ -4,7 +4,7 @@ body {
 	margin: 0 10%;
 }
 
-a, div, dl, dd, h1, h2, h3, p, ul {
+a, div, dl, dd, h1, h2, h3, h4, p, ul {
 	border: 0;
 	margin: 0;
 	padding: 0;
@@ -69,7 +69,7 @@ ul {
 	list-style-type: none;
 }
 
-#navigation, #path, #content, #footer, p {
+#navigation, #path, #content, #footer, p, h1, h2, h3, h4 {
 	clear: both;
 }
 
@@ -167,13 +167,15 @@ ul {
 }
 
 #content h3 {
-	font-size: 1em;
-	margin: 0.2em 0 0.3em 0;
+	font-size: 1.1em;
+	margin: 0.8em 0;
 }
 
 #content h4 {
 	color: #02408D;
 	font-size: 1em;
+	padding: 0.2em 0;
+	margin: 0.6em 0;
 }
 
 #content p {
@@ -210,6 +212,29 @@ ul {
 
 .scheda {
 	line-height: 2;
+}
+
+.spettacoli li {
+	display: inline;
+	background-color: #EFEFEF;
+	border: 1px dotted black;
+	padding: 0.2em 0;
+}
+
+.spettacoli li a {
+	padding: 0.2em 0.5em;
+}
+
+.spettacolo {
+	line-height: 1.8em;
+}
+
+dd.titolo {
+	font-weight: bold;
+}
+
+dd.regista {
+	font-style: italic;
 }
 
 #tagline {
