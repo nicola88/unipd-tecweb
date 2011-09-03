@@ -16,11 +16,15 @@ use XML::LibXML; # se usate XML
 use CGI;
 print "Content-type: text/html\n\n";
 
-# 1. GESTIONE SESSIONE
-
-# VALIDAZIONE INPUT
+# LETTURA INPUT
 my $cgi = new CGI;
 my $id = $cgi->param('id'); # $input{'spettacolo'}; # ID spettacolo (XML)
+
+# 1. GESTIONE SESSIONE
+#$session=CGI::Session->load();
+#if($session->is_expired || $session->is_empty){
+#    print "Location: login.cgi?source=$id\n\n";
+#}
 
 # 2. LETTURA INFORMAZIONI da XML
 my $parser=XML::LibXML->new();
@@ -112,13 +116,13 @@ print <<HTML;
                 <input type="hidden" name="spettacolo" id="spettacolo" value="$id" />
                 <input type="submit" value="Prenota biglietti" />
             </fieldset>
-    </div>
 HTML
 } else {
 	print "\t\t<p>Spettacolo non disponibile.</p>\n";	
 }
 
 print <<HTML;
+    </div>
     <div id="footer">
         <a href="http://validator.w3.org/check?uri=referer"><span id="xhtml_valid" title="HTML 1.0 Strict valido"></span></a>
         <span id="css_valid" title="CSS 2.1 valido"></span>

@@ -85,7 +85,7 @@ if(@lista) {
 	my $regista = $film->getChildrenByTagName('regista');
 	my $anno = $film->getChildrenByTagName('anno');
 	my $tagline = $film->getChildrenByTagName('tagline');
-	my $locandina = "/img/" . $id . ".jpg"; # Nome locandina = <id_film>
+	my $locandina = "../img/" . $id . ".jpg"; # Nome locandina = <id_film>
 	my $trama = $film->getChildrenByTagName('trama');
 	$titolo = encode_entities($titolo);
 	$tagline = encode_entities($tagline);

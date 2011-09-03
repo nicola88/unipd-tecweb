@@ -35,12 +35,14 @@ else{
 	# Leggo i valori ricevuti in input (se presenti): username, password e
 	# JavaScript.
 	my $cgi=new CGI;
+	my $source=$cgi->param('source');
 	my $username=$cgi->param('username');
 	my $password=$cgi->param('password');
 	my $javascript=$cgi->param('javascript');
 	if(!defined($username) || !defined($password)){
 		# prima invocazione della pagina
-		&print_login_page();
+		if(!defined($source)) {$source="account.cgi";}			
+		&print_login_page($source);
 	}
 	else{
 		# seconda (o successiva) invocazione della pagina
@@ -95,11 +97,11 @@ else{
 			}
 			else{
 				$error="\t\t<p>Nome utente e password inserite non corrispondono ad alcun utente registrato.</p>";
-				&print_login_page($error);
+				&print_login_page(undef,$error);
 			}
 		}
 		else{
-			&print_login_page($error);
+			&print_login_page(undef,$error);
 		}
 	}
 }
@@ -167,6 +169,7 @@ print <<HTML;
 				<input id="username" name="username" />
 				<label for="password">Password</label>
 				<input type="password" id="password" name="password" />
+				<input type="hidden" id="source" name="source" value="$_[0]">
 				<input type="submit" value="Accedi" />
 			</fieldset>
 			<noscript>

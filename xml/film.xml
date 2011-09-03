@@ -42,22 +42,22 @@
 				<ora>16:30:00</ora>
 				<posti>150</posti>
 			</spettacolo>
-			<spettacolo id="godf_S4">
+			<spettacolo id="godf4">
 				<data>2011-06-06</data>
 				<ora>09:30:00</ora>
 				<posti>100</posti>
 			</spettacolo>
-			<spettacolo id="godf_S5">
+			<spettacolo id="godf5">
 				<data>2011-06-06</data>
 				<ora>13:00:00</ora>
 				<posti>100</posti>
 			</spettacolo>
-			<spettacolo id="godf_S6">
+			<spettacolo id="godf6">
 				<data>2011-06-06</data>
 				<ora>16:30:00</ora>
 				<posti>150</posti>
 			</spettacolo>
-			<spettacolo id="godf_S7">
+			<spettacolo id="godf7">
 				<data>2011-06-07</data>
 				<ora>11:00:00</ora>
 				<posti>75</posti>
@@ -99,52 +99,52 @@
 				5-6 giugno: 11:00 - 14:00 - 17:00
 				7 giugno: 10:30 - 14:30 - 18:00 - 21:00 
 			 -->
-			<spettacolo id="casro_S1">
+			<spettacolo id="casro1">
 				<data>2011-06-05</data>
 				<ora>11:00:00</ora>
 				<posti>50</posti>
 			</spettacolo>
-			<spettacolo id="casro_S2">
+			<spettacolo id="casro2">
 				<data>2011-06-05</data>
 				<ora>14:00:00</ora>
 				<posti>100</posti>
 			</spettacolo>
-			<spettacolo id="casro_S3">
+			<spettacolo id="casro3">
 				<data>2011-06-05</data>
 				<ora>17:00:00</ora>
 				<posti>150</posti>
 			</spettacolo>
-			<spettacolo id="casro_S4">
+			<spettacolo id="casro4">
 				<data>2011-06-06</data>
 				<ora>11:00:00</ora>
 				<posti>50</posti>
 			</spettacolo>
-			<spettacolo id="casro_S5">
+			<spettacolo id="casro5">
 				<data>2011-06-06</data>
 				<ora>15:00:00</ora>
 				<posti>100</posti>
 			</spettacolo>
-			<spettacolo id="casro_S6">
+			<spettacolo id="casro6">
 				<data>2011-06-06</data>
 				<ora>20:30:00</ora>
 				<posti>150</posti>
 			</spettacolo>
-			<spettacolo id="casro_S7">
+			<spettacolo id="casro7">
 				<data>2011-06-07</data>
 				<ora>10:30:00</ora>
 				<posti>75</posti>
 			</spettacolo>
-			<spettacolo id="casro_S8">
+			<spettacolo id="casro8">
 				<data>2011-06-07</data>
 				<ora>14:30:00</ora>
 				<posti>150</posti>
 			</spettacolo>
-			<spettacolo id="casro_S9">
+			<spettacolo id="casro9">
 				<data>2011-06-07</data>
 				<ora>18:00:00</ora>
 				<posti>100</posti>
 			</spettacolo>
-			<spettacolo id="casro_S10">
+			<spettacolo id="casro10">
 				<data>2011-07-07</data>
 				<ora>21:00:00</ora>
 				<posti>150</posti>
