@@ -113,16 +113,16 @@ print <<HTML;
 	    	<caption>Elenco delle prenotazioni effettuate</caption>
 	    	<thead>
 			<tr>
-				<th>Film</th>
-				<th>Spettacolo</th>
-				<th>Numero di posti</th>
+				<th scope="col" id="film">Film</th>
+				<th scope="col" id="spettacolo">Spettacolo</th>
+				<th scope="col" id="posti">Numero di posti</th>
 			</tr>
 	    	</thead>
 	    	<tfoot>
 		   		<tr>
-	    			<th>Film</th>
-	    			<th>Spettacolo</th>
-	    			<th>Numero di posti</th>
+	    			<th scope="col">Film</th>
+	    			<th scope="col">Spettacolo</th>
+	    			<th scope="col">Numero di posti</th>
 	    		</tr>
 	    	</tfoot>
 	    	<tbody>
@@ -134,7 +134,9 @@ HTML
 			my $seats=$bookings[$i]->getElementsByTagName('posti');
 			my @show=$root->findnodes("//spettacolo[\@id='$id']");
 			my $date=$show[0]->getElementsByTagName('data');
+			$date = &date_format_conversion($date);
 			my $time=$show[0]->getElementsByTagName('ora');
+			$time = substr($time,0,-3);
 			my $film=($show[0]->parentNode())->parentNode();
 			my $title=$film->getElementsByTagName('titolo');
 			$title=encode_entities($title);
@@ -143,9 +145,9 @@ HTML
 			$seats=encode_entities($seats);
 print <<HTML;
 				<tr>
-					<td>$title</td>
-					<td>$date $time</td>
-					<td>$seats</td>
+					<td headers="film">$title</td>
+					<td headers="spettacolo">$date alle $time</td>
+					<td headers="posti">$seats</td>
 				</tr>
 HTML
 		}
@@ -166,3 +168,8 @@ print <<HTML;
 HTML
 }
 
+sub date_format_conversion{
+	my $xml_data = $_[0];
+	my $data = substr($xml_data,8,2) . "-" . substr($xml_data,5,2) . "-" . substr($xml_data,0,4);
+	return $data;
+}

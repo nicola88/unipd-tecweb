@@ -10,21 +10,20 @@
 ######################################################
 # TO DO: conversione in intero del numero di posti letto da XML
 ######################################################
-
-use HTML::Entities;
-use XML::LibXML; # se usate XML
 use CGI;
-print "Content-type: text/html\n\n";
+use CGI::Session;
+use HTML::Entities;
+use XML::LibXML;
 
 # LETTURA INPUT
 my $cgi = new CGI;
 my $id = $cgi->param('id'); # $input{'spettacolo'}; # ID spettacolo (XML)
 
-# 1. GESTIONE SESSIONE
-#$session=CGI::Session->load();
-#if($session->is_expired || $session->is_empty){
-#    print "Location: login.cgi?source=$id\n\n";
-#}
+# GESTIONE SESSIONE
+$session=CGI::Session->load();
+if($session->is_expired || $session->is_empty){
+    print "Location: login.cgi?source=$id\n\n";
+}
 
 # 2. LETTURA INFORMAZIONI da XML
 my $parser=XML::LibXML->new();
@@ -32,6 +31,7 @@ my $document=$parser->parse_file('xml/film.xml');
 my $root=$document->getDocumentElement;
 @spettacolo=$root->findnodes("//spettacolo[\@id='$id']");
 
+print "Content-type: text/html\n\n";
 print <<HTML;
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
@@ -119,7 +119,7 @@ print <<HTML;
             </fieldset>
 HTML
 } else {
-	print "\t\t<p>Spettacolo non disponibile.</p>\n";	
+	print "\t\t<p>Spettacolo non disponibile.</p>\n";
 }
 
 print <<HTML;

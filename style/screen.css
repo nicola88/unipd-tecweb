@@ -79,7 +79,7 @@ ul {
 }
 
 /* HEADER */
-#skip_nav {
+#skip_nav, #skip_table {
 	position: absolute;
 	height: 0;
 	overflow: hidden;
