@@ -103,7 +103,7 @@ print "\t\t<h2 id=\"eventi\">Eventi</h2>\n";
 			$descrizione = encode_entities($descrizione);
 print <<HTML;
 		<div class="notizia">
-			<h3><span class="data">$data</span> - $titolo/h3>
+			<h3><span class="data">$data</span> - $titolo</h3>
 			<p>
 				$descrizione
 			</p>
