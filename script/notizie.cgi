@@ -31,7 +31,7 @@ print <<HTML;
     <meta content="Alberto Maragno, Alessandro Benetti, Nicola Moretto" name="author" />
     <meta content="Pagina riservata alle notizie, suddivise in avvisi, eventi e programmazione" name="description" />
     <meta content="Cinema Paradiso" name="copyright" />
-    <meta content="cinema, paradiso, programmazione, film" name="keyword" />
+    <meta content="cinema, paradiso, programmazione, film, biglietti, spettacoli, proiezioni" name="keyword" />
     <link href="../style/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="../style/portable.css" rel="stylesheet" type="text/css" media="handheld, screen and (max-width:480px), only screen and (max-device-width:480px)" />
     <link href="../style/print.css" rel="stylesheet" type="text/css" media="print" />

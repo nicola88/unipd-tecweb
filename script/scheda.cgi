@@ -41,7 +41,7 @@ print <<HTML;
     <meta content="Alberto Maragno, Alessandro Benetti, Nicola Moretto" name="author" />
     <meta content="$titolo: informazioni dettagliate e orari degli spettacoli" name="description" />
     <meta content="Cinema Paradiso" name="copyright" />
-    <meta content="cinema, paradiso, programmazione, film" name="keyword" />
+    <meta content="cinema, paradiso, programmazione, film, biglietti, spettacoli, proiezioni" name="keyword" />
     <title>$titolo - Cinema Paradiso</title>
     <link href="../style/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="../style/portable.css" rel="stylesheet" type="text/css" media="handheld, screen and (max-width:480px), only screen and (max-device-width:480px)" />

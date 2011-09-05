@@ -6,7 +6,7 @@
     <meta content="Alberto Maragno, Alessandro Benetti, Nicola Moretto" name="author" />
     <meta content="Pagina per l'aggiornamento della password di un account utente" name="description" />
     <meta content="Cinema Paradiso" name="copyright" />
-    <meta content="cinema, paradiso, programmazione, film" name="keyword" />
+    <meta content="cinema, paradiso, programmazione, film, biglietti, spettacoli, proiezioni" name="keyword" />
     <title>Cambia password - Cinema Paradiso</title>
     <link href="style/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="style/portable.css" rel="stylesheet" type="text/css" media="handheld, screen and (max-width:480px), only screen and (max-device-width:480px)" />
@@ -42,7 +42,7 @@
     </div>
     <div id="content">
     	<h1>Cambia password</h1>
-    	<form action="/cgi-bin/aggiorna_pwd.cgi" method="get" id="aggiorna_password">
+    	<form action="/cgi-bin/aggiorna_pwd.cgi" method="post" id="aggiorna_password">
     		<fieldset>
     			<legend>Inserisci la nuova password</legend>
     			<label for="username">Nome utente</label>
@@ -53,6 +53,7 @@
     			<input type="password" id="pwd_nuova" name="pwd_nuova" />
     			<label for="pwd_nuova_conferma">Conferma nuova password:</label>
     			<input type="password" id="pwd_nuova_conferma" name="pwd_nuova_conferma" />
+    			<input type="reset" value="Cancella tutto" />
     			<input type="submit" value="Aggiorna password" onclick="return updatePassword()" />
     		</fieldset>
     		<noscript>

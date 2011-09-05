@@ -50,7 +50,7 @@ print <<HTML;
     <meta content="Alberto Maragno, Alessandro Benetti, Nicola Moretto" name="author" />
     <meta content="Pagina di riepilogo delle informazioni associate ad un utente registrato" name="description" />
     <meta content="Cinema Paradiso" name="copyright" />
-    <meta content="cinema, paradiso, programmazione, film" name="keyword" />
+    <meta content="cinema, paradiso, programmazione, film, biglietti, spettacoli, proiezioni" name="keyword" />
     <title>Area riservata - Cinema Paradiso</title> 
     <link href="../style/screen.css" rel="stylesheet" type="text/css" media="screen" /> 
     <link href="../style/portable.css" rel="stylesheet" type="text/css" media="handheld, screen and (max-width:480px), only screen and (max-device-width:480px)" /> 
@@ -88,11 +88,11 @@ print <<HTML;
 	    </ul>
 	    <h2 id="profilo">Dettagli del profilo</h2>
     	<dl>
-    		<dt>Nome</dt>
+    		<dt>Nome:</dt>
     		<dd>$name</dd>
-    		<dt>Cognome</dt>
+    		<dt>Cognome:</dt>
     		<dd>$surname</dd>
-    		<dt>Nome utente</dt>
+    		<dt>Nome utente:</dt>
     		<dd>$username</dd>
     		<dt>Indirizzo di posta elettronica:</dt>
     		<dd>$email</dd>    			
@@ -109,12 +109,12 @@ HTML
 	my @bookings=$root->findnodes("//utente[username='$username' and password='$password']/prenotazioni/prenotazione");
 	if(@bookings){
 print <<HTML;
-	    <table summary="" title="Prenotazioni">
+	    <table summary="Elenco delle prenotazioni associate all'utente: film, data e ora dello spettacolo e numero di posti prenotati" title="Prenotazioni">
 	    	<caption>Elenco delle prenotazioni effettuate</caption>
 	    	<thead>
 			<tr>
 				<th scope="col" id="film">Film</th>
-				<th scope="col" id="spettacolo">Spettacolo</th>
+				<th scope="col" id="spettacolo" abbr="spett">Spettacolo</th>
 				<th scope="col" id="posti">Numero di posti</th>
 			</tr>
 	    	</thead>
