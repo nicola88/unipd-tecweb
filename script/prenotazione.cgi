@@ -87,7 +87,7 @@ print <<HTML;
     <meta content="Alberto Maragno, Alessandro Benetti, Nicola Moretto" name="author" />
     <meta content="Pagina dedicata all'elaborazione della richiesta di prenotazione dei biglietti" name="description" />
     <meta content="Cinema Paradiso" name="copyright" />
-    <meta content="cinema, paradiso, programmazione, film" name="keyword" />
+    <meta content="cinema, paradiso, programmazione, film, biglietti, spettacoli, proiezioni" name="keyword" />
     <title>Prenotazione biglietti - Cinema Paradiso</title>
     <link href="../style/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="../style/portable.css" rel="stylesheet" type="text/css" media="handheld, screen and (max-width:480px), only screen and (max-device-width:480px)" />
@@ -123,9 +123,6 @@ print <<HTML;
     <div id="content">
         <h1>Prenotazione biglietti</h1>
         <p>Prenotazione effettuata con successo. Per consultarla, accedere <a href="account.cgi" title="Area riservata">all'area riservata</a>.</p>
-        <!-- 
-        <p>$username - $id - $posti - $parent - $posti_tot - $posti_disponibili</p>
-        -->
     </div>
     <div id="footer">
         <a href="http://validator.w3.org/check?uri=referer"><span id="xhtml_valid" title="HTML 1.0 Strict valido"></span></a>

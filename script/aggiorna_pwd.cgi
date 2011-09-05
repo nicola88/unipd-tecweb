@@ -127,7 +127,7 @@ print <<HTML;
     <meta content="Alberto Maragno, Alessandro Benetti, Nicola Moretto" name="author" />
     <meta content="Pagina di elaborazione della richiesta di aggiornamento della password per un account utente" name="description" />
     <meta content="Cinema Paradiso" name="copyright" />
-    <meta content="cinema, paradiso, programmazione, film" name="keyword" />
+    <meta content="cinema, paradiso, programmazione, film, biglietti, spettacoli, proiezioni" name="keyword" />
     <title>Cambia password - Cinema Paradiso</title>
     <link href="style/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="style/portable.css" rel="stylesheet" type="text/css" media="handheld, screen and (max-width:480px), only screen and (max-device-width:480px)" />
@@ -168,7 +168,7 @@ HTML
 	print $_[0];
 	# seconda parte del codice XHTML della pagina
 print <<HTML;
-    	<form action="/cgi-bin/aggiorna_pwd.cgi" method="get">
+    	<form action="/cgi-bin/aggiorna_pwd.cgi" method="post">
     		<fieldset>
     			<legend>Inserisci la nuova password</legend>
     			<label for="username">Nome utente</label>
@@ -179,6 +179,7 @@ print <<HTML;
     			<input type="password" id="pwd_nuova" name="pwd_nuova" />
     			<label for="pwd_nuova_conferma">Conferma nuova password:</label>
     			<input type="password" id="pwd_nuova_conferma" name="pwd_nuova_conferma" />
+    			<input type="reset" value="Cancella tutto" />
     			<input type="submit" value="Aggiorna password" />
     		</fieldset>
     		<noscript>
@@ -211,17 +212,6 @@ print <<HTML;
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="refresh" content="0; url=account.cgi" />
-    <meta content="Autenticazione - Cinema Paradiso" name="title" />
-    <meta content="Alberto Maragno, Alessandro Benetti, Nicola Moretto" name="author" />
-    <meta content="Pagina per l'autenticazione di utenti registrati" name="description" />
-    <meta content="Cinema Paradiso" name="copyright" />
-    <meta content="cinema, paradiso, programmazione, film" name="keyword" />
-    <title>Autenticazione - Cinema Paradiso</title>
-    <link href="style/screen.css" rel="stylesheet" type="text/css" media="screen" />
-    <link href="style/portable.css" rel="stylesheet" type="text/css" media="handheld, screen and (max-width:480px), only screen and (max-device-width:480px)" />
-    <link href="style/print.css" rel="stylesheet" type="text/css" media="print" />
-    <script type="text/javascript" src="script/validation.js"></script>
-    <link rel="shortcut icon" href="img/cinema.ico" />
 </head>
 <body />
 </html>

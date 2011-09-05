@@ -41,7 +41,7 @@ print <<HTML;
     <meta content="Alberto Maragno, Alessandro Benetti, Nicola Moretto" name="author" />
     <meta content="Mostra informazioni dettagliate sullo spettacolo selezionato" name="description" />
     <meta content="Cinema Paradiso" name="copyright" />
-    <meta content="cinema, paradiso, programmazione, film" name="keyword" />
+    <meta content="cinema, paradiso, programmazione, film, biglietti, spettacoli, proiezioni" name="keyword" />
     <title>Dettagli spettacolo - Cinema Paradiso</title>
     <link href="../style/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="../style/portable.css" rel="stylesheet" type="text/css" media="handheld, screen and (max-width:480px), only screen and (max-device-width:480px)" />
@@ -72,7 +72,7 @@ print <<HTML;
         </ul>
     </div>
     <div id="path">
-        <p>Sei in: <a href="../default.html"">Pagina iniziale</a> &#187; <a href="../programmazione.html">Programmazione</a> &#187; Dettagli spettacolo</p>
+        <p>Sei in: <a href="../default.html">Pagina iniziale</a> &#187; <a href="../programmazione.html">Programmazione</a> &#187; Dettagli spettacolo</p>
     </div>
     <div id="content">
         <h1>Dettagli spettacolo</h1>
@@ -117,6 +117,7 @@ print <<HTML;
                 <input type="hidden" name="spettacolo" id="spettacolo" value="$id" />
                 <input type="submit" value="Prenota biglietti" />
             </fieldset>
+		</form>
 HTML
 } else {
 	print "\t\t<p>Spettacolo non disponibile.</p>\n";

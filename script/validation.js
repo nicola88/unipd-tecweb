@@ -20,7 +20,10 @@ function aggiungiErrore(lista, errore) {
 
 function checkRegistration() {
 	var errori = document.getElementById("errori");
-	if(errori) {document.removeChild(errori);}
+	if(errori) {
+		var parent = errori.parentNode;
+		parent.removeChild(errori);
+	}
 	var input = document.forms["registrazione"];
 	var validationError = false;
 	var patternMail = /^[\w\-\+\.]+@[\w\-\+\.]+\.[\w\-\+\.]+$/;
@@ -74,6 +77,11 @@ function checkRegistration() {
 }
 
 function checkLogin() {
+	var errori = document.getElementById("errori");
+	if(errori) {
+		var parent = errori.parentNode;
+		parent.removeChild(errori);
+	}
 	var input = document.forms["login"];
 	var validationError = false;
 	var patternUsername = /^\S{3,}$/;
@@ -101,6 +109,11 @@ function checkLogin() {
 }
 
 function updatePassword() {
+	var errori = document.getElementById("errori");
+	if(errori) {
+		var parent = errori.parentNode;
+		parent.removeChild(errori);
+	}
 	var input = document.forms["aggiorna_password"];
 	var validationError = false;
 	var patternUsername = /^\S{3,}$/;
