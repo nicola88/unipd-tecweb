@@ -76,6 +76,7 @@ print "\t\t<h2 id=\"uscite\">Film e programmazione</h2>\n";
 	if(@notizie_film) {
 		foreach $notizia (@notizie_film) {
 			my $data = $notizia->getChildrenByTagName('data');
+			$data = &date_format_conversion($data);
 			my $titolo = $notizia->getChildrenByTagName('titolo');
 			$titolo = encode_entities($titolo);
 			my $descrizione = encode("utf-8",$notizia->getChildrenByTagName('descrizione'));
@@ -97,6 +98,7 @@ print "\t\t<h2 id=\"eventi\">Eventi</h2>\n";
 	if(@notizie_eventi) {
 		foreach $notizia (@notizie_eventi) {
 			my $data = $notizia->getChildrenByTagName('data');
+			$data = &date_format_conversion($data);
 			my $titolo = $notizia->getChildrenByTagName('titolo');
 			$titolo = encode_entities($titolo);
 			my $descrizione = $notizia->getChildrenByTagName('descrizione');
@@ -118,6 +120,7 @@ print "\t\t<h2 id=\"avvisi\">Avvisi generali</h2>\n";
 	if(@notizie_avvisi) {
 		foreach $notizia (@notizie_avvisi) {
 			my $data = $notizia->getChildrenByTagName('data');
+			$data = &date_format_conversion($data);
 			my $titolo = $notizia->getChildrenByTagName('titolo');
 			$titolo = encode_entities($titolo);
 			my $descrizione = $notizia->getChildrenByTagName('descrizione');
@@ -145,3 +148,9 @@ print <<HTML;
 </body>
 </html>
 HTML
+
+sub date_format_conversion{
+	my $xml_data = $_[0];
+	my $data = substr($xml_data,8,2) . "-" . substr($xml_data,5,2) . "-" . substr($xml_data,0,4);
+	return $data;
+}

@@ -157,9 +157,9 @@ print <<HTML;
         <h1>Autenticazione</h1>
 HTML
 	# eventuali messaggi d'errore per l'utente
-	if(defined($_[0])){
-		print $_[0];
-	}
+	#if(defined($_[0])){
+	#	print $_[0];
+	#}
 	# seconda parte del codice XHTML della pagina
 print <<HTML;
 		<form action="login.cgi" method="post" id="login">

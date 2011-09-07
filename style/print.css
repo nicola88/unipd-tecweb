@@ -1,1 +1,58 @@
 /* STAMPA */
+body {
+	background-color: white;
+	color: black;
+	font-family: Verdana,"Lucida Grande","DejaVu Sans",sans-serif;
+	text-align: justify;
+}
+
+table, th, td {
+	border: 1px solid black;
+}
+
+th, td {
+	padding: 0.2em;
+	text-align: center;
+}
+
+.titolo, dt, legend, th {
+	font-weight: bold;
+}
+
+#account, #navigation, #path, #skip_nav, #skip_table {
+	display: none;
+}
+
+#header a {
+	color: black;
+	text-decoration: none;
+}
+
+#header h1 {
+	margin: 0;
+}
+
+#header h2 {
+	margin: 0;
+	font-size: 1em;
+	font-weight: normal;
+	font-style: italic;
+}
+
+#indice {
+	list-style-type: decimal;
+}
+
+dd {
+	margin: 0;
+}
+
+.regista, #tagline {
+	font-style: italic;
+}
+
+#footer {
+	margin-top: 1em;
+	text-align: center;
+	font-style: italic;
+}
