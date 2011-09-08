@@ -32,8 +32,8 @@ if(!$session->is_expired && !$session->is_empty){
 else{
 	# utente non autenticato
 	# (2) LETTURA INPUT FORM
-	# Leggo i valori ricevuti in input (se presenti): username, password e
-	# JavaScript.
+	# Leggo i valori ricevuti in input (se presenti): pagina di provenienza,
+	# username, password e JavaScript.
 	my $cgi=new CGI;
 	my $source=$cgi->param('source');
 	my $username=$cgi->param('username');
@@ -41,8 +41,10 @@ else{
 	my $javascript=$cgi->param('javascript');
 	if(!defined($username) || !defined($password)){
 		# prima invocazione della pagina
-		if(!defined($source)) {$source="account.cgi";}			
-		&print_login_page($source);
+		if(!defined($source)){
+			$source="account.cgi";
+		}
+		&print_login_page($source,undef);
 	}
 	else{
 		# seconda (o successiva) invocazione della pagina
@@ -83,7 +85,7 @@ else{
 			my @users=$root->findnodes("//utente[username='$username' and password='$password']");
 			# (3) GESTIONE AUTENTICAZIONE
 			# Se le credenziali d'accesso sono corrette, creo una nuova sessione e
-			# redireziono alla pagina dell'area utente, altrimenti stampo la pagina di
+			# redireziono alla pagina di provenienza, altrimenti stampo la pagina di
 			# login con segnalato l'errore riscontrato.
 			if(@users){
 				my $session=CGI::Session->new();
@@ -93,15 +95,15 @@ else{
 				$session->param('username',$username);
 				$session->param('password',$password);
 				$session->expire('+20m'); # scadenza della sessione = 20 minuti
-				&redirect_to_account_page(); # non utilizzare $cgi->redirect($url) perché accetta solo URL assoluti
+				&redirect($source); # non utilizzare $cgi->redirect($url) perché accetta solo URL assoluti
 			}
 			else{
 				$error="\t\t<p>Nome utente e password inserite non corrispondono ad alcun utente registrato.</p>";
-				&print_login_page(undef,$error);
+				&print_login_page($source,$error);
 			}
 		}
 		else{
-			&print_login_page(undef,$error);
+			&print_login_page($source,$error);
 		}
 	}
 }
@@ -157,9 +159,9 @@ print <<HTML;
         <h1>Autenticazione</h1>
 HTML
 	# eventuali messaggi d'errore per l'utente
-	#if(defined($_[0])){
-	#	print $_[0];
-	#}
+	if(defined($_[1])){
+		print $_[1];
+	}
 	# seconda parte del codice XHTML della pagina
 print <<HTML;
 		<form action="login.cgi" method="post" id="login">
@@ -193,8 +195,8 @@ print <<HTML;
 HTML
 }
 
-# FUNZIONE N°2: REDIREZIONE PAGINA ACCOUNT UTENTE
-sub redirect_to_account_page{
+# FUNZIONE N°2: REDIREZIONE
+sub redirect{
 	print "Content-type: text/html\n\n";
 	# codice XHTML della pagina
 print <<HTML;
@@ -202,7 +204,7 @@ print <<HTML;
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="refresh" content="0; url=account.cgi" />
+    <meta http-equiv="refresh" content="0;url=spettacolo.cgi?id=$_[0]" />
 </head>
 <body />
 </html>
