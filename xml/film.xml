@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <programmazione>
 	<film id="godf">
-		<titolo>Il Padrino</titolo>
-		<regista>Francis Ford Coppola</regista>
+		<titolo lang="it">Il Padrino</titolo>
+		<regista lang="en">Francis Ford Coppola</regista>
 		<nazione>USA</nazione>
 		<anno>1972</anno>
 		<durata>176</durata>
@@ -10,11 +10,11 @@
 			<genere>Drammatico</genere>
 		</generi>
 		<cast>
-			<attore>Marlon Brando</attore>
-			<attore>Al Pacino</attore>
-			<attore>James Caan</attore>
-			<attore>Robert Duvall</attore>
-			<attore>Diane Keaton</attore>
+			<attore lang="en">Marlon Brando</attore>
+			<attore lang="en">Al Pacino</attore>
+			<attore lang="en">James Caan</attore>
+			<attore lang="en">Robert Duvall</attore>
+			<attore lang="en">Diane Keaton</attore>
 		</cast>
 		<tagline>Un'offerta che non potrai rifiutare.</tagline>
 		<trama>
@@ -75,8 +75,8 @@
 		</programmazione>
 	</film>
 	<film id="casro">
-		<titolo>Casino Royale</titolo>
-		<regista>Martin Campbell</regista>
+		<titolo lang="fr">Casino Royale</titolo>
+		<regista lang="en">Martin Campbell</regista>
 		<nazione>Gran Bretagna</nazione>
 		<anno>2006</anno>
 		<durata>144</durata>
@@ -85,10 +85,10 @@
 			<genere>Spionaggio</genere>
 		</generi>
 		<cast>
-			<attore>Daniel Craig</attore>
-			<attore>Eva Green</attore>
-			<attore>Mads Mikkelsen</attore>
-			<attore>Giancarlo Giannini</attore>
+			<attore lang="en">Daniel Craig</attore>
+			<attore lang="fr">Eva Green</attore>
+			<attore lang="da">Mads Mikkelsen</attore>
+			<attore lang="it">Giancarlo Giannini</attore>
 		</cast>
 		<tagline>Everyone has a past. Every legend has a beginning.	</tagline>
 		<trama>
@@ -152,8 +152,8 @@
 		</programmazione>
 	</film>
 	<film id="bsgl">
-		<titolo>Bastardi senza gloria</titolo>
-		<regista>Quentin Tarantino</regista>
+		<titolo lang="it">Bastardi senza gloria</titolo>
+		<regista lang="en">Quentin Tarantino</regista>
 		<nazione>USA</nazione>
 		<anno>2009</anno>
 		<durata>153</durata>
@@ -162,10 +162,10 @@
 			<genere>Storico</genere>
 		</generi>
 		<cast>
-			<attore>Brad Pitt</attore>
-			<attore>Christoph Waltz</attore>
-			<attore>Diane Kruger</attore>
-			<attore>Mélanie Laurent</attore>
+			<attore lang="en">Brad Pitt</attore>
+			<attore lang="de">Christoph Waltz</attore>
+			<attore lang="de">Diane Kruger</attore>
+			<attore lang="fr">Mélanie Laurent</attore>
 		</cast>
 		<uscita>2011-09-20</uscita>
 		<tagline>Non hai mai visto la guerra, finché non l’hai vista con gli occhi di Quentin Tarantino.</tagline>

@@ -184,7 +184,7 @@ print <<HTML;
     		</fieldset>
     		<noscript>
 			<fieldset class="script">
-				<input type="text" id="javascript" name="javascript" value="false" />
+				<input type="text" id="javascript" name="javascript" value="false" readonly="readonly" />
 			</fieldset>
 			</noscript>
     	</form>
@@ -193,8 +193,6 @@ print <<HTML;
     	</p>
     </div>
     <div id="footer">
-    	<a href="http://validator.w3.org/check?uri=referer"><span id="xhtml_valid" title="HTML 1.0 Strict valido"></span></a>
-    	<span id="css_valid" title="CSS 2.1 valido"></span>
     	<p>Cinema Paradiso - Via Guardiani della Notte, 15 (AR)</p>
     </div>
 </body>

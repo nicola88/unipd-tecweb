@@ -4,14 +4,22 @@ targetNamespace="http://progetto-tecweb/film"
 xmlns="http://progetto-tecweb/film"
 elementFormDefault="qualified">
 
+<xs:complexType name="localized_string">
+	<xs:simpleContent>
+		<xs:extension base="xs:string">
+			<xs:attribute name="lang" type="xs:string" />
+		</xs:extension>
+	</xs:simpleContent>
+</xs:complexType>
+
 <xs:element name="programmazione">
 	<xs:complexType>
 		<xs:sequence>
 			<xs:element name="film" maxOccurs="unbounded">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="titolo" type="xs:string" />
-						<xs:element name="regista" type="xs:string" />
+						<xs:element name="titolo" type="localized_string" />
+						<xs:element name="regista" type="localized_string" />
 						<xs:element name="nazione" type="xs:string" />
 						<xs:element name="anno" type="xs:gYear" />
 						<xs:element name="durata" type="xs:positiveInteger" />
@@ -43,7 +51,7 @@ elementFormDefault="qualified">
 						<xs:element name="cast">
 							<xs:complexType>
 								<xs:sequence>
-									<xs:element name="attore" type="xs:string" maxOccurs="unbounded" />
+									<xs:element name="attore" type="localized_string" maxOccurs="unbounded" />
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
@@ -75,7 +83,3 @@ elementFormDefault="qualified">
 </xs:element>
 
 </xs:schema>
-
-<!--
-- Nome convenzionale locandine
--->
