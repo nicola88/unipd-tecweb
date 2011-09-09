@@ -62,7 +62,10 @@ print <<HTML;
     <div id="header">
     	<h1><a href="../default.html" title="Pagina iniziale">Cinema Paradiso</a></h1> 
     	<h2>Programmazione e prenotazioni online</h2> 
-    </div> 
+    </div>
+    <div id="account">
+    	<p><a href="logout.cgi" title="Esci">Esci</a></p>
+    </div>
     <div id="navigation">
     	<ul>
         	<li><a href="../default.html" accesskey="0">Pagina iniziale</a>
@@ -139,13 +142,19 @@ HTML
 			$time = substr($time,0,-3);
 			my $film=($show[0]->parentNode())->parentNode();
 			my $title=$film->getElementsByTagName('titolo');
+			my $title_lang=$film->findvalue("titolo/\@lang");
 			$title=encode_entities($title);
 			$date=encode_entities($date);
 			$time=encode_entities($time);
 			$seats=encode_entities($seats);
+			print "\t\t\t\t<tr>\n";
+			if($title_lang eq 'it'){
+				print "\t\t\t\t\t<td headers='film'>$title</td>\n";
+			}
+			else{
+				print "\t\t\t\t\t<td headers='film' lang='$title_lang' xml:lang='$title_lang'>$title</td>\n";
+			}
 print <<HTML;
-				<tr>
-					<td headers="film">$title</td>
 					<td headers="spettacolo">$date alle $time</td>
 					<td headers="posti">$seats</td>
 				</tr>

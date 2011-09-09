@@ -204,7 +204,14 @@ print <<HTML;
 <html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="refresh" content="0;url=spettacolo.cgi?id=$_[0]" />
+HTML
+	if($_[0] eq 'account.cgi'){
+		print "\t\t<meta http-equiv='refresh' content='0;url=$_[0]' />\n";
+	}
+	else{
+    print "\t\t<meta http-equiv='refresh' content='0;url=spettacolo.cgi?id=$_[0]' />\n";
+	}
+print <<HTML;
 </head>
 <body />
 </html>
