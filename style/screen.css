@@ -147,6 +147,8 @@ ul {
 	border: 1px dotted #505050;
 	padding: 0.3em;
 }
+* html #indice li { display:inline; }  /* hack per IE 6 */
+* + html #indice li { display:inline; }  /* hack per IE 7 */
 
 #content h1 {
 	font-size: 1.8em;
