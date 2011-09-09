@@ -86,7 +86,9 @@ if(@spettacolo) {
 	$ora = substr($ora,0,-3);
 	my $posti = $spettacolo[0]->getChildrenByTagName('posti');
 	my $film = ($spettacolo[0]->parentNode())->parentNode();
-	my $titolo = $film->getChildrenByTagName('titolo');
+	@titolo = $film->getChildrenByTagName('titolo');
+	$lang_titolo = $titolo[0]->getAttribute('lang');
+	$titolo = $titolo[0]->textContent();
 	$titolo = encode_entities($titolo);
 	my $maxPrenotazioni = 5; # Numero massimo di prenotazioni individuali
 	$posti = int($posti);
@@ -94,7 +96,10 @@ if(@spettacolo) {
 print <<HTML;
         <dl class="spettacolo">
             <dt>Film:</dt>
-            <dd>$titolo</dd>
+HTML
+	if($lang_titolo eq 'it'){print "\t\t\t<dd>$titolo</dd>\n";}
+    else{print "\t\t\t<dd lang='$lang_titolo' xml:lang='$lang_titolo'>$titolo</dd>\n";}
+print <<HTML;
             <dt>Data:</dt>
             <dd>$data</dd>
             <dt>Ora:</dt>

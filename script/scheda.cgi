@@ -27,7 +27,9 @@ my $root=$document->getDocumentElement;
 my @lista = $root->findnodes("//film[\@id='$id']");
 if(@lista) {
 	$film = $lista[0];
-	$titolo = $film->getChildrenByTagName('titolo');
+	@titolo = $film->getChildrenByTagName('titolo');
+	$lang_titolo = $titolo[0]->getAttribute('lang');
+	$titolo = $titolo[0]->textContent();
 } else {
 	$titolo = "Film non disponibile";
 }
@@ -82,7 +84,8 @@ if(@lista) {
 	my $durata = $film->getChildrenByTagName('durata');
 	my @genere = $film->findnodes("generi/genere");
 	my $nazione = $film->getChildrenByTagName('nazione');
-	my $regista = $film->getChildrenByTagName('regista');
+	my @regista = $film->getChildrenByTagName('regista');
+	my $lang_regista = $regista[0]->getAttribute('lang');
 	my $anno = $film->getChildrenByTagName('anno');
 	my $tagline = $film->getChildrenByTagName('tagline');
 	my $locandina = "../img/" . $id . ".jpg"; # Nome locandina = <id_film>
@@ -90,32 +93,38 @@ if(@lista) {
 	$titolo = encode_entities($titolo);
 	$tagline = encode_entities($tagline);
 	$trama = encode_entities($trama);
-	$regista = encode_entities($regista);
+	$regista = encode_entities($regista[0]->textContent());
 	$nazione = encode_entities($nazione);
+	if($lang_titolo ne "it") {print "\t\t<h1 lang=\"$lang_titolo\" xml:lang=\"$lang_titolo\">$titolo</h1>\n";}
+	else {print "\t\t<h1>$titolo</h1>\n";}
 print <<HTML;
-        <h1>$titolo</h1>
         <blockquote id="tagline"><p>
              $tagline
         </p></blockquote>
         <img class="locandina" src="$locandina" alt="Locandina '$titolo'" height="240" width="160" />
         <dl class="scheda">
             <dt>Titolo:</dt>
-            <dd>$titolo</dd>
-            <dt>Genere:</dt>
 HTML
-	print "\t\t\t\t<dd>";
+	if($lang_titolo ne "it") {print "\t\t\t<dd lang=\"$lang_titolo\" xml:lang=\"$lang_titolo\">$titolo</dd>\n";}
+	else {print "\t\t\t<dd>$titolo</dd>\n";}
+	print "\t\t\t<dt>Genere:</dt>\n\t\t\t\t<dd>";
 	$lista_generi = "";
 	foreach $value (@genere) {$value=$value->textContent(); $value = encode_entities($value); $lista_generi = $lista_attori . "$value, ";}
 	$lista_generi = substr($lista_generi,0,-2);
-	print "$lista_generi</dd>\n";
-print <<HTML;		
-			<dt>Regista:</dt>
-            <dd>$regista</dd>
-            <dt>Attori:</dt>
-HTML
-	print "\t\t\t\t<dd>";
+	print "$lista_generi</dd>\n\t\t\t<dt>Regista:</dt>\n";
+	
+	if($lang_regista ne "it") {print "\t\t\t<dd lang=\"$lang_regista\" xml:lang=\"$lang_regista\">$regista</dd>\n";}
+	else {print "\t\t\t<dd>$regista</dd>\n";}
+	
+	print "\t\t\t<dt>Attori:</dt>\n\t\t\t\t<dd>";
 	$lista_attori = "";
-	foreach $attore (@attori) {$value=$attore->textContent(); $value = encode_entities($value); $lista_attori = $lista_attori . "$value, ";}
+	foreach $attore (@attori) {
+		$lang_attore = $attore->getAttribute('lang');
+		$value=$attore->textContent();
+		$value = encode_entities($value);
+		if($lang_attore ne "it") {$lista_attori = $lista_attori . "<span lang=\"$lang_attore\" xml:lang=\"$lang_attore\">$value</span>, ";}
+		else {$lista_attori = $lista_attori . "$value, ";}
+	}
 	$lista_attori = substr($lista_attori,0,-2);
 	print "$lista_attori</dd>\n";
 print <<HTML;
