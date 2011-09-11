@@ -153,7 +153,7 @@ print <<HTML;
         </ul>
     </div>
     <div id="path">
-    	<p>Sei in: <a href="../default.html" title="">Pagina iniziale</a> &#187; Autenticazione</p>
+    	<p>Sei in: <a href="../default.html">Pagina iniziale</a> &#187; Autenticazione</p>
     </div>
     <div id="content">
         <h1>Autenticazione</h1>

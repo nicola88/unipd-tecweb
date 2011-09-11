@@ -38,17 +38,20 @@
         </ul>
     </div>
     <div id="path">
-    	<p>Sei in: <a href="default.html" title="">Pagina iniziale</a> &#187; Cambia password</p>
+    	<p>Sei in: <a href="./cgi-bin/account.cgi">Area riservata</a> &#187; Cambia password</p>
     </div>
     <div id="content">
     	<h1>Cambia password</h1>
     	<form action="/cgi-bin/aggiorna_pwd.cgi" method="post" id="aggiorna_password">
     		<fieldset>
-    			<legend>Inserisci la nuova password</legend>
+    			<legend>Inserisci le informazioni sull'account</legend>
     			<label for="username">Nome utente</label>
     			<input id="username" name="username" />
     			<label for="pwd_corrente">Password attuale:</label>
     			<input type="password" id="pwd_corrente" name="pwd_corrente" />
+    		</fieldset>
+    		<fieldset>
+    			<legend>Inserisci la nuova password</legend>
     			<label for="pwd_nuova">Nuova password:</label>
     			<input type="password" id="pwd_nuova" name="pwd_nuova" />
     			<label for="pwd_nuova_conferma">Conferma nuova password:</label>
