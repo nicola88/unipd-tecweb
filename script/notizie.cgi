@@ -61,7 +61,7 @@ print <<HTML;
         </ul>
     </div>
     <div id="path">
-        <p>Sei in: <a href="../default.html" title="">Pagina iniziale</a> &#187; Notizie</p>
+        <p>Sei in: <a href="../default.html">Pagina iniziale</a> &#187; Notizie</p>
     </div>
     <div id="content">
         <h1>Notizie</h1>

@@ -118,7 +118,7 @@ print <<HTML;
         </ul>
     </div>
     <div id="path">
-        <p>Sei in: <a href="../default.html"">Pagina iniziale</a> &#187; <a href="../programmazione.html">Programmazione</a> &#187; Prenotazione biglietti</p>
+        <p>Sei in: <a href="../default.html">Pagina iniziale</a> &#187; <a href="../programmazione.html">Programmazione</a> &#187; Prenotazione biglietti</p>
     </div>
     <div id="content">
         <h1>Prenotazione biglietti</h1>

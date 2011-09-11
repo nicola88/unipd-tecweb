@@ -220,11 +220,14 @@ p.link a, p.link span {
 }
 
 .spettacoli li {
-	display: inline;
+	display: inline-block;
 	background-color: #EFEFEF;
 	border: 1px dotted black;
+	margin-bottom: 0.2em;
 	padding: 0.2em 0;
 }
+* html .spettacoli li { display:inline; }  /* hack per IE 6 */
+* + html .spettacoli li { display:inline; }  /* hack per IE 7 */
 
 .spettacoli li a {
 	padding: 0.2em 0.5em;

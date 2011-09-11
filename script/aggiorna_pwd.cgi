@@ -159,8 +159,8 @@ print <<HTML;
         </ul>
     </div>
     <div id="path">
-    	<p>Sei in: <a href="../default.html" title="">Pagina iniziale</a> &#187; Cambia password</p>
-    </div>
+		<p>Sei in: <a href="./cgi-bin/account.cgi">Area riservata</a> &#187; Cambia password</p>
+	</div>
     <div id="content">
     	<h1>Cambia password</h1>
 HTML
